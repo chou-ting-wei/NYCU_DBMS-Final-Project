@@ -8,7 +8,7 @@
     <head>
         <meta charset="UTF=8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>NBA Stat - Login</title>
+        <title>NBA Stat - Register</title>
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     </head>
@@ -45,7 +45,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Login</a>
+                        <a class="nav-link active" href="login.php">Login</a>
                     </li>
                 </ul>
             </div>
@@ -86,7 +86,7 @@
             }
         ?>
         <div class="container mt-4">
-            <h3 class="fw-bolder">Login</h3>
+            <h3 class="fw-bolder">Register</h3>
             <hr class="mt-3 mb-3"></hr>
             <form id="loginForm" class="need-validation" novalidate action=login.php method="post">
                 <div class="mt-3 mb-3">
@@ -108,7 +108,6 @@
                 </div>
                 <button type="submit" class="btn btn-secondary">Submit</button>
             </form>
-            <div class="mt-3">Don't have an account?&ensp;<a href="register.php">Sign up</a></div>
         </div>
         <script>
             document.getElementById("loginForm").addEventListener("submit", function(event) {
