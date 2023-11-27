@@ -47,5 +47,52 @@
         mysqli_close($connection);
     }
 
-    
+    function getPlayerInfo($PID){
+        $connection = initDB();
+        $query = NULL;
+
+        // PID = 0 -> return all player
+        if($PID == 0){
+            $query = "SELECT * FROM Players";
+        }
+        else{
+            $query = "SELECT * FROM Players WHERE PID='".$PID."'";
+        }
+
+        $result = mysqli_query($connection, $query);
+
+        $playerData = NULL;
+        $playerID = 0;
+        
+        while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){   
+            $PID = $row['PID'];
+            $PName = $row['PName'];
+
+            // 這些是原本書裡給的
+            // $SourceSID = $row['SourceSID'];
+            // $DestSID = $row['DestSID'];
+            
+            // // 取得出發地點的航點資訊
+            // $query2 = "SELECT * FROM Sectors WHERE SID='".$SourceSID."'";
+            // $result2 = mysqli_query($connection,$query2);         
+            // $row2 = mysqli_fetch_array($result2,MYSQLI_ASSOC);
+            // $source = $row2['Sector'];
+
+            // // 取得目的地點的航點資訊 
+            // $query3 = "SELECT * FROM Sectors WHERE SID='".$DestSID."'";
+            // $result3 = mysqli_query($connection, $query3);             
+            // $row3 = mysqli_fetch_array($result3,MYSQLI_ASSOC);
+            // $dest= $row3['Sector'];
+
+            $player = new Player();        
+            $player->set_PID($PID);
+            $player->set_PName($PName);
+
+            $playerData[$playerID] = $player;
+            $playerID = $playerID +1;              
+        }
+
+        closeDB($connection);
+        return $playerData;
+    }
 ?>

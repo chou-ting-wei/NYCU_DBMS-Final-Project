@@ -4,7 +4,7 @@
     session_start();
     if(!isset($_SESSION["login_session"])){
         $_SESSION["login_session"] = false;
-        $_SESSION["username"] = "";
+        $_SESSION["username"] = NULL;
     }
 ?>
 <html>

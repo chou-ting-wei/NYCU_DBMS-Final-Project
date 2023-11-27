@@ -1,20 +1,20 @@
 <?php
-    class team{
+    class Team{
         private $TID;
-        private $tName;
+        private $TName;
 
         function set_TID($TID){
             $this->TID = $TID;
         }
-        function set_tName($tName){
-            $this->tName = $tName;
+        function set_TName($TName){
+            $this->TName = $TName;
         }
         
         function get_TID(){
             return $this->TID;
         }
-        function get_tName(){
-            return $this->tName;
+        function get_TName(){
+            return $this->TName;
         }
     }
 ?>
