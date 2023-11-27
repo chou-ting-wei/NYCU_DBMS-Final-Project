@@ -4,6 +4,7 @@
     session_start();
     if(!isset($_SESSION["login_session"])){
         $_SESSION["login_session"] = false;
+        $_SESSION["username"] = "";
     }
 ?>
 <html>
@@ -46,6 +47,19 @@
                             echo "</li>";
                         }
                         else{
+                            if(isset($_SESSION['username'])){
+                                $username = $_SESSION['username'];
+                                if($username == "admin"){
+                                    echo "<li class='nav-item'>";
+                                    echo "<a class='nav-link active' href='admin.php'>".$username."</a>";
+                                    echo "</li>";
+                                }
+                                else{
+                                    echo "<li class='nav-item'>";
+                                    echo "<a class='nav-link active'>".$username."</a>";
+                                    echo "</li>";
+                                }
+                            }
                             echo "<li class='nav-item'>";
                             echo "<a class='nav-link active' href='logout.php'>Logout</a>";
                             echo "</li>";

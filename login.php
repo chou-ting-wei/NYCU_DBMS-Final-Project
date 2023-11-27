@@ -65,13 +65,13 @@
                 //     $msg = "Wrong username or password";
                 //     $_SESSION["login_session"] = false;
                 // }
-                if($username == "admin" && $password == "admintest"){
+                if(($username == "admin" && $password == "admintest") || ($username == "test" && $password == "testtest")){
                     $_SESSION["login_session"] = true;
                     $_SESSION["username"] = $username;
                     header("Location: index.php");
                 }
                 else{
-                    $msg = "Wrong username or password";
+                    $msg = "Wrong username or password.";
                     $_SESSION["login_session"] = false;
                 }
                 // mysqli_close($link);
@@ -79,25 +79,36 @@
         ?>
         <div class="container mt-4">
             <h3>Login</h3>
-            <form action=login.php method="post">
+            <form id="loginForm" class="need-validation" novalidate action=login.php method="post">
                 <div class="mt-3 mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username"placeholder="username" autocomplete="off" minlength="4" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="password" autocomplete="off" minlength="8" required>
+                    <input type="text" class="form-control" id="username" name="username"placeholder="username" autocomplete="off" minlength="4" maxlength="20" required>
                     <div class="invalid-feedback">
-                        Password should 
+                        Username must contain 4 to 20 characters.
                     </div>
                 </div>
                 <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="password" autocomplete="off" minlength="8" maxlength="30" required>
+                    <div class="invalid-feedback">
+                        Password must contain 8 to 30 characters.
+                    </div>
+                </div>
+                <div class="text-danger mb-3">
                     <?php echo $msg; ?>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
-
+        <script>
+            document.getElementById("loginForm").addEventListener("submit", function(event) {
+                if (this.checkValidity() === false) {
+                    event.preventDefault();
+                    // event.stopPropagation();
+                }
+                this.classList.add("was-validated"); 
+            }, false);
+        </script>
         <!-- Bootstrap JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     </body>
