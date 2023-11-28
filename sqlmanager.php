@@ -130,7 +130,7 @@
 
     }
 
-    function getTeamInfo(){
+    function getTeamInfo($TName){
 
     }
 
@@ -138,11 +138,11 @@
 
     }
 
-    function addForum(){
+    function addForum($FTitle, $Ftext){
 
     }
 
-    function delForum(){
+    function delForum($FTilte){
 
     }
 
@@ -150,11 +150,11 @@
 
     }
     
-    function addVote(){
+    function addVote($Vtitle){
 
     }
 
-    function delVote(){
+    function delVote($VTitle){
 
     }
 ?>
