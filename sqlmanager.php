@@ -47,31 +47,61 @@
         mysqli_close($connection);
     }
 
-    function getPlayerInfo($PID){
+    function chkLogin($username, $password){
+        $ret = false;
+
         $connection = initDB();
-        $query = NULL;
-
-        // PID = 0 -> return all player
-        if($PID == 0){
-            $query = "SELECT * FROM Players";
-        }
-        else{
-            $query = "SELECT * FROM Players WHERE PID='".$PID."'";
+        $query = "SELECT * FROM students WHERE password='".$password."' AND username='".$username."'";
+        $result = mysqli_query($connection, $query);
+        if(mysqli_num_rows($result) > 0){
+            $ret = true;
         }
 
+        closeDB($connection);
+        return $ret;
+    }
+
+    function addRegister($username, $password){
+        $ret = false;
+
+        $connection = initDB();
+        // 確認是否存在 username
+        $query = "";
+        $result = mysqli_query($connection, $query);
+        if(mysqli_num_rows($result) > 0){
+            return $ret;
+        }
+
+        // 加入此 username password
+        $query2 = "";
+        $result2 = mysqli_query($connection, $query);
+
+        closeDB($connection);
+        return $ret;
+    }
+
+    // 以下都可以隨便改
+    function getPlayerList(){
+
+    }
+
+    function getPlayerInfo($PName){
+        $connection = initDB();
+    
+        $query = "SELECT * FROM Players WHERE PName='".$PName."'";
         $result = mysqli_query($connection, $query);
 
         $playerData = NULL;
         $playerID = 0;
         
-        while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){   
+        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){   
             $PID = $row['PID'];
             $PName = $row['PName'];
 
             // 這些是原本書裡給的
             // $SourceSID = $row['SourceSID'];
             // $DestSID = $row['DestSID'];
-            
+
             // // 取得出發地點的航點資訊
             // $query2 = "SELECT * FROM Sectors WHERE SID='".$SourceSID."'";
             // $result2 = mysqli_query($connection,$query2);         
@@ -94,5 +124,37 @@
 
         closeDB($connection);
         return $playerData;
+    }
+
+    function getTeamList(){
+
+    }
+
+    function getTeamInfo(){
+
+    }
+
+    function getForumList(){
+
+    }
+
+    function addForum(){
+
+    }
+
+    function delForum(){
+
+    }
+
+    function getVoteList(){
+
+    }
+    
+    function addVote(){
+
+    }
+
+    function delVote(){
+
     }
 ?>

@@ -82,7 +82,6 @@
                     $msg = "Wrong username or password.";
                     $_SESSION["login_session"] = false;
                 }
-                // mysqli_close($link);
             }
         ?>
         <div class="container mt-4">
