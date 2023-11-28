@@ -54,41 +54,23 @@
     <body>
         <?php
             $username = ""; $password = "";
-            $msg = "";
             if(isset($_POST["username"]))
                 $username = $_POST["username"];  
             if(isset($_POST["password"]))
                 $password = $_POST["password"];
             if($username != "" && $password != ""){
-                // $link = require_once("config.php");
-                // $sql = "SELECT * FROM students WHERE password='".$password."' AND username='".$username."'";
-                // $result = mysqli_query($link, $sql);
-                // $total_records = mysqli_num_rows($result);
-                // if($total_records > 0){
-                //     $_SESSION["login_session"] = true;
-                //     $_SESSION["username"] = $username;
-                //     header("Location: index.php");
-                // }
-                // else{
-                //     $msg = "Wrong username or password.";
-                //     $_SESSION["login_session"] = false;
-                // }
                 if(($username == "admin" && $password == "admintest") || ($username == "test" && $password == "testtest")){
-                    $_SESSION["login_session"] = true;
-                    $_SESSION["username"] = $username;
-                    header("Location: index.php");
+                    echo "<script> alert('Register successful!'); location.href='login.php'</script>";
                 }
                 else{
-                    $msg = "Wrong username or password.";
-                    $_SESSION["login_session"] = false;
+                    echo "<script> alert('Register failed!');</script>";
                 }
-                // mysqli_close($link);
             }
         ?>
         <div class="container mt-4">
             <h3 class="fw-bolder">Register</h3>
             <hr class="mt-3 mb-3"></hr>
-            <form id="loginForm" class="need-validation" novalidate action=login.php method="post">
+            <form id="loginForm" class="need-validation" novalidate action=register.php method="post">
                 <div class="mt-3 mb-3">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" class="form-control" id="username" name="username"placeholder="username" autocomplete="off" minlength="4" maxlength="20" required>
@@ -102,9 +84,6 @@
                     <div class="invalid-feedback">
                         Password must contain 8 to 30 characters.
                     </div>
-                </div>
-                <div class="text-danger mb-3">
-                    <?php echo $msg; ?>
                 </div>
                 <button type="submit" class="btn btn-secondary">Submit</button>
             </form>
