@@ -2,6 +2,7 @@
     class Player{
         private $PID;
         private $PName;
+        private $PMoney;
 
         function set_PID($PID){
             $this->PID = $PID;
