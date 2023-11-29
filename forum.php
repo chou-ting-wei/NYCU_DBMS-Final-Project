@@ -81,10 +81,12 @@
         <div class="container mt-4">
             <h3 class="fw-bolder">Forum</h3>
             <hr class="mt-3 mb-3"></hr>
-            
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-secondary" type="button">&ensp;+&ensp;</button>
+            </div>
         </div>
         <script>
-            
+
         </script>
 
         <!-- Bootstrap JavaScript Bundle with Popper -->

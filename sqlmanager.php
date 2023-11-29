@@ -138,7 +138,7 @@
 
     }
 
-    function addForum($FTitle, $Ftext){
+    function addForum($FTitle, $FText, $username){
 
     }
 
@@ -150,7 +150,7 @@
 
     }
     
-    function addVote($Vtitle){
+    function addVote($VTitle, $username){
 
     }
 
