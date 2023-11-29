@@ -78,16 +78,60 @@
         </div>
     </nav>
     <body>
+        <?php
+            $search = "";
+            if(isset($_POST["search"])){
+                $search = $_POST["search"]; 
+
+            }  
+        ?>
         <div class="container mt-4">
             <h3 class="fw-bolder">Forum</h3>
             <hr class="mt-3 mb-3"></hr>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-secondary" type="button">&ensp;+&ensp;</button>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 me-auto">
+                        <form id="Search" class="need-validation" novalidate action=forum.php method="post">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="search" name="search" placeholder="Search" minlength="1" required>
+                                <button class="btn btn-secondary" type="button">
+                                &nbsp;
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                </svg>
+                                &nbsp;
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-secondary" type="button">
+                            &nbsp;
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                            </svg>
+                            &nbsp;
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
+    
         <script>
-
+            document.getElementById("searchForm").addEventListener("submit", function(event) {
+                if (this.checkValidity() === false) {
+                    event.preventDefault();
+                    // event.stopPropagation();
+                }
+                this.classList.add("was-validated"); 
+            }, false);
         </script>
+        <div class="container mt-3">
+            <div class="text-danger mb-3">
+                    <!-- <?php echo $msg; ?> -->
+            </div>
+        </div>
 
         <!-- Bootstrap JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
