@@ -80,7 +80,14 @@
         return $ret;
     }
 
-    // 以下都可以隨便改
+    function getUserList(){
+
+    }
+
+    function modifyPassword($username){
+        
+    }
+
     function getPlayerList(){
 
     }
