@@ -60,19 +60,6 @@
             if(isset($_POST["password"]))
                 $password = $_POST["password"];
             if($username != "" && $password != ""){
-                // $link = require_once("config.php");
-                // $sql = "SELECT * FROM students WHERE password='".$password."' AND username='".$username."'";
-                // $result = mysqli_query($link, $sql);
-                // $total_records = mysqli_num_rows($result);
-                // if($total_records > 0){
-                //     $_SESSION["login_session"] = true;
-                //     $_SESSION["username"] = $username;
-                //     header("Location: index.php");
-                // }
-                // else{
-                //     $msg = "Wrong username or password.";
-                //     $_SESSION["login_session"] = false;
-                // }
                 if(($username == "admin" && $password == "admintest") || ($username == "test" && $password == "testtest")){
                     $_SESSION["login_session"] = true;
                     $_SESSION["username"] = $username;
