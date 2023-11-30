@@ -82,8 +82,13 @@
             $search = "";
             if(isset($_POST["search"])){
                 $search = $_POST["search"]; 
+            }
+            if($search != ""){
+                $forumData = getForumList($search);
+                if(count($forumData) > 0){
 
-            }  
+                }
+            }
         ?>
         <div class="container mt-4">
             <h3 class="fw-bolder">Forum</h3>
@@ -106,7 +111,7 @@
                         </form>
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-secondary" type="button">
+                        <button class="btn btn-secondary" type="button" href="#" data-bs-toggle="modal" data-bs-target="#forumModal">
                             &nbsp;
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
@@ -117,7 +122,6 @@
                 </div>
             </div>
         </div>
-    
         <script>
             document.getElementById("searchForm").addEventListener("submit", function(event) {
                 if (this.checkValidity() === false) {
@@ -130,6 +134,29 @@
         <div class="container mt-3">
             <div class="text-danger mb-3">
                     <!-- <?php echo $msg; ?> -->
+            </div>
+        </div>
+        <div class="modal fade" id="forumModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="forumModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="forumModalLabel">New Forum</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="inputTitle" class="form-label">Title</label>
+                            <input type="text" name="title" class="form-control" id="inputTitle">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputContent" class="form-label">Content</label>
+                            <textarea class="form-control" id="inputContent" rows="4"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="savebtn">Save</button>
+                    </div>
+                </div>
             </div>
         </div>
 

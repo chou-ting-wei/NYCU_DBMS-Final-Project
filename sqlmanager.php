@@ -88,7 +88,7 @@
         
     }
 
-    function getPlayerList(){
+    function getPlayerList($PTitle){
 
     }
 
@@ -126,14 +126,14 @@
             $player->set_PName($PName);
 
             $playerData[$playerID] = $player;
-            $playerID = $playerID +1;              
+            $playerID = $playerID + 1;              
         }
 
         closeDB($connection);
         return $playerData;
     }
 
-    function getTeamList(){
+    function getTeamList($TName){
 
     }
 
@@ -141,8 +141,25 @@
 
     }
 
-    function getForumList(){
+    function getForumList($FTitle){
+        $connection = initDB();
 
+        $query = "";
+        $result = mysqli_query($connection, $query);
+
+        $forumData = NULL;
+        $forumID = 0;
+
+        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){ 
+            
+            $forum = new Forum();
+
+            $forumData[$forumID] = $forum;
+            $forumID = $forumID + 1;
+        }
+
+        closeDB($connection);
+        return $forumData;
     }
 
     function addForum($FTitle, $FText, $username){
@@ -153,8 +170,25 @@
 
     }
 
-    function getVoteList(){
+    function getVoteList($VTitle){
+        $connection = initDB();
 
+        $query = "";
+        $result = mysqli_query($connection, $query);
+
+        $voteData = NULL;
+        $voteID = 0;
+
+        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){ 
+            
+            $vote = new Vote();
+
+            $voteData[$voteID] = $vote;
+            $voteID = $voteID + 1;
+        }
+
+        closeDB($connection);
+        return $voteData;
     }
     
     function addVote($VTitle, $username){
