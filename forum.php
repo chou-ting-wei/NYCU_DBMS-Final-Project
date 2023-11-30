@@ -168,7 +168,7 @@
                             if(isset($_SESSION['username'])){
                                 $username = $_SESSION['username'];
                                 if($username == "admin" || $username == $forum[2]){
-                                    echo "<button class='btn btn-danger' type='button' onclick='deleteForum(".$forum[0].")'>";
+                                    echo "<button class='btn btn-danger' type='button' onclick='_delForum(".$forum[0].")'>";
                                     echo "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash' viewBox='0 0 16 16'>";
                                     echo "<path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z'/>";
                                     echo "<path d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z'/>";
@@ -188,7 +188,7 @@
             ?>
         </div>
         <script>
-            function deleteForum(FTitle) {
+            function _delForum(FTitle) {
                 if(delForum(FTitle)){
                     alert('Delete forum successful!');
                     window.location.reload();
@@ -207,20 +207,40 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="inputTitle" class="form-label">Title</label>
-                            <input type="text" name="title" class="form-control" id="inputTitle">
+                            <label for="FTitle" class="form-label">Title</label>
+                            <input type="text" name="title" class="form-control" id="FTitle">
                         </div>
                         <div class="mb-3">
-                            <label for="inputContent" class="form-label">Content</label>
-                            <textarea class="form-control" id="inputContent" rows="4"></textarea>
+                            <label for="FText" class="form-label">Content</label>
+                            <textarea class="form-control" id="FText" rows="4"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="savebtn">Save</button>
+                        <button type="button" class="btn btn-secondary" id="submitBtn" onclick="_addForum()">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            function _addForum() {
+                var FTitle = document.getElementById('FTitle').value;
+                var FText = document.getElementById('FText').value;
+                if(FTitle != "" && FText != ""){
+                    if(!isset($_SESSION["username"])){
+                        alert('Add forum failed! Please login first.');
+                    }
+                    else{
+                        if(addForum(Ftitle, FText, $_SESSION["username"])){
+                            alert('Add forum successful!');
+                            window.location.reload();
+                        }
+                        else{
+                            alert('Add forum failed!');
+                        }
+                    }
+                }
+            }
+        </script>
 
         <!-- Bootstrap JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
