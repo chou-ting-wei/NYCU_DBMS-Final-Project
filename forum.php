@@ -27,6 +27,15 @@
             -ms-user-select: none;
             user-select: none;
         }
+        .w-15{
+            width: 15%;
+        }
+        .w-20{
+            width: 20%;
+        }
+        .w-65{
+            width: 65%;
+        }
     </style>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -85,10 +94,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 me-auto">
-                        <form id="Search" class="need-validation" novalidate action=forum.php method="post">
+                        <form id="searchForm" class="need-validation" novalidate action=forum.php method="post">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="search" name="search" placeholder="Search" minlength="1" required>
-                                <button class="btn btn-secondary" type="button">
+                                <button class="btn btn-secondary" type="submit">
                                 &nbsp;
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
@@ -140,6 +149,22 @@
                     }
                 }
             ?>
+            <table class="table table-borded">
+                <thead>
+                    <tr>
+                        <th scope="col" class="w-65">Title</th>
+                        <th scope="col" class="w-20">Author</th>
+                        <th scope="col" class="w-15">Util</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Test</td>
+                        <td>Admin</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="text-danger mb-3">
                     <?php echo $msg; ?>
             </div>
