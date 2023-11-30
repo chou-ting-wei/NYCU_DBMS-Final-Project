@@ -204,7 +204,7 @@
     function addVote($VTitle){
         $connection = initDB();
         $time=date("Y/m/d h:i:s");
-        $query="INSERT INTO Vote Values(".$VTitle.",".0.",".0.",".$time.")";
+        $query="INSERT INTO Vote Values(".$VTitle.", 0, 0, ".$time.")";
         mysqli_query($connection, $query);
         closeDB($connection);
     }
