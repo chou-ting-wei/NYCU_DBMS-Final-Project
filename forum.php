@@ -156,7 +156,10 @@
                 }
                 else{
                     $forumData = getForumList("");
-                    $forumCnt = count($forumData);
+                    $forumCnt = 0;
+                    if($forumData != NULL){
+                        $forumCnt = count($forumData);
+                    }
                     if($forumCnt > 0){
                         for($index = 0; $index < $forumCnt; $index ++){
                             $forum = $forumData[$index]->get_all();
@@ -198,6 +201,47 @@
                 }
             }
         </script>
+        <script>
+            function createCookie(name, value, days) {
+                var expires;
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toGMTString();
+                }
+                else {
+                    expires = "";
+                }
+                document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
+            }
+
+            function _addForum() {
+                var FTitle = document.getElementById('FTitle').value;
+                var FText = document.getElementById('FText').value;
+                createCookie("FTitle", FTitle, "1");
+                createCookie("FText", FText, "1");
+    
+                if(FTitle != "" && FText != ""){
+                    if(<?php echo $_SESSION["username"] == NULL ? 1 : 0; ?>){
+                        alert('Add forum failed! Please login first.');
+                    }
+                    else{
+                        <?php
+                            if(addForum($_COOKIE["FTitle"], $_COOKIE["FText"], $_SESSION["username"])){
+                                echo "alert('Add forum successful!');";
+                                echo "window.location.reload();";
+                            }
+                            else{
+                                echo "alert('Add forum failed!');";
+                            }
+                        ?>
+                    }
+                }
+                else{
+                    alert('Add forum failed! Please fill in all fields.');
+                }
+            }
+        </script>
         <div class="modal fade" id="forumModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="forumModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -221,26 +265,6 @@
                 </div>
             </div>
         </div>
-        <script>
-            function _addForum() {
-                var FTitle = document.getElementById('FTitle').value;
-                var FText = document.getElementById('FText').value;
-                if(FTitle != "" && FText != ""){
-                    if(!isset($_SESSION["username"])){
-                        alert('Add forum failed! Please login first.');
-                    }
-                    else{
-                        if(addForum(Ftitle, FText, $_SESSION["username"])){
-                            alert('Add forum successful!');
-                            window.location.reload();
-                        }
-                        else{
-                            alert('Add forum failed!');
-                        }
-                    }
-                }
-            }
-        </script>
 
         <!-- Bootstrap JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
