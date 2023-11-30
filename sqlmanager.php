@@ -163,11 +163,16 @@
     }
 
     function addForum($FTitle, $FText, $username){
-
+        $connection = initDB();
+        $time=date("Y/m/d h:i:s");
+        $query="INSERT INTO Forum Values(".$FTitle.",".$FText.",".$username.","$time.")";
+        closeDB($connection);
     }
 
     function delForum($FTilte){
-
+        $connection = initDB();
+        $query="DELETE FROM Forum WHERE title=".$FTitle;
+        closeDB($connection);
     }
 
     function getVoteList($VTitle){
@@ -191,8 +196,10 @@
         return $voteData;
     }
     
-    function addVote($VTitle, $username){
-
+    function addVote($VTitle){
+        $connection = initDB();
+        $query="DELETE FROM Forum WHERE title=".$FTitle;
+        closeDB($connection);
     }
 
     function delVote($VTitle){
