@@ -82,7 +82,7 @@
     }
 
     function getUserList(){
-
+        
     }
 
     function modifyPassword($username){
@@ -168,15 +168,17 @@
         $connection = initDB();
         $time=date("Y/m/d h:i:s");
         $query="INSERT INTO Forum Values(".$FTitle.",".$FText.",".$username.",".$time.")";
-        mysqli_query($connection, $query);
+        $b=mysqli_query($connection, $query);
         closeDB($connection);
+        return $b;
     }
 
     function delForum($FTitle){
         $connection = initDB();
-        $query="DELETE FROM Forum WHERE title=".$FTitle;
-        mysqli_query($connection, $query);
+        $query="DELETE FROM Forum WHERE title='".$FTitle."'";
+        $b=mysqli_query($connection, $query);
         closeDB($connection);
+        return $b;
     }
 
     function getVoteList($VTitle){
@@ -206,27 +208,30 @@
         $connection = initDB();
         $time=date("Y/m/d h:i:s");
         $query="INSERT INTO Vote Values(".$VTitle.", 0, 0, ".$time.")";
-        mysqli_query($connection, $query);
+        $b=mysqli_query($connection, $query);
         closeDB($connection);
+        return $b;
     }
 
     function Vote($VTitle, $side){
         $connection = initDB();
         $query="";
         if ($side==1){
-            $query="UPDATE Vote SET vote_1=vote_1+1 WHERE title=".$VTitle;
+            $query="UPDATE Vote SET vote_1=vote_1+1 WHERE title='".$VTitle."'";
         }
         else{
-            $query="UPDATE Vote SET vote_2=vote_2+1 WHERE title=".$VTitle;
+            $query="UPDATE Vote SET vote_2=vote_2+1 WHERE title='".$VTitle."'";
         }
-        mysqli_query($connection, $query);
+        $b=mysqli_query($connection, $query);
         closeDB($connection);
+        return $b;
     }
 
     function delVote($VTitle){
         $connection = initDB();
-        $query="DELETE FROM Vote WHERE title=".$VTitle;
-        mysqli_query($connection, $query);
+        $query="DELETE FROM Vote WHERE title='".$VTitle."'";    
+        $b=mysqli_query($connection, $query);
         closeDB($connection);
+        return $b;
     }
 ?>
