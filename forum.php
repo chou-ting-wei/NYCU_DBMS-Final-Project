@@ -6,7 +6,10 @@
         $_SESSION["login_session"] = false;
         $_SESSION["username"] = NULL;
     }
-    include("sqlmanager.php")
+    if(!isset($_SESSION["forum_search"])){
+        $_SESSION["forum_search"] = NULL;
+    }
+    include("sqlmanager.php");
 ?>
 <html>
     <head>
@@ -27,14 +30,14 @@
             -ms-user-select: none;
             user-select: none;
         }
-        .w-15{
-            width: 15%;
+        .w-5{
+            width: 5%;
         }
         .w-20{
             width: 20%;
         }
-        .w-65{
-            width: 65%;
+        .w-55{
+            width: 55%;
         }
     </style>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -87,6 +90,14 @@
         </div>
     </nav>
     <body>
+        <?php
+            $search = "";
+            $msg = "";
+            if(isset($_POST["search"])){
+                $search = $_POST["search"]; 
+                $_SESSION["forum_search"] = $search;
+            }
+        ?>
         <div class="container mt-4">
             <h3 class="fw-bolder">Forum</h3>
             <hr class="mt-3 mb-3"></hr>
@@ -94,9 +105,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 me-auto">
-                        <form id="searchForm" class="need-validation" novalidate action=forum.php method="post">
+                        <form id="searchForm" class="need-validation" action=forum.php method="post">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="search" name="search" placeholder="Search" minlength="1" required>
+                                <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="<?php echo $_SESSION["forum_search"]?>">
                                 <button class="btn btn-secondary" type="submit">
                                 &nbsp;
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -119,22 +130,17 @@
                 </div>
             </div>
         </div>
-        <script>
-            document.getElementById("searchForm").addEventListener("submit", function(event) {
-                if (this.checkValidity() === false) {
-                    event.preventDefault();
-                    // event.stopPropagation();
-                }
-                this.classList.add("was-validated"); 
-            }, false);
-        </script>
         <div class="container mt-3">
             <?php
-                $search = "";
-                $msg = "";
-                if(isset($_POST["search"])){
-                    $search = $_POST["search"]; 
-                }
+                echo "<div class='table-responsive'>";
+                echo "<table class='table table-borded'>";
+                echo "<thead><tr>";
+                echo "<th scope='col' class='w-55 align-middle'>Title</th>";
+                echo "<th scope='col' class='w-20 align-middle'>Author</th>";
+                echo "<th scope='col' class='w-20 align-middle'>Time</th>";
+                echo "<th scope='col' class='w-5 align-middle'></th>";
+                echo "</tr></thead>";
+                echo "<tbody>";
                 if($search != ""){
                     $forumData = getForumList($search);
                     $forumCnt = count($forumData);
@@ -145,30 +151,53 @@
                         }
                     }
                     else{
-                        $msg = "No result found.";
+                        echo "<tr><td class='align-middle' colspan='4'><span class='text-danger mb-3'>No result found.</span></td></tr>";
                     }
                 }
+                else{
+                    $forumData = getForumList("");
+                    $forumCnt = count($forumData);
+                    if($forumCnt > 0){
+                        for($index = 0; $index < $forumCnt; $index ++){
+                            $forum = $forumData[$index]->get_all();
+                            echo "<tr>";
+                            echo "<td class='align-middle'>".$forum[0]."</td>";
+                            echo "<td class='align-middle'>$forum[2]</td>";
+                            echo "<td class='align-middle'>$forum[3]</td>";
+                            echo "<td class='align-middle'>";
+                            if(isset($_SESSION['username'])){
+                                $username = $_SESSION['username'];
+                                if($username == "admin" || $username == $forum[2]){
+                                    echo "<button class='btn btn-danger' type='button' onclick='deleteForum(".$forum[0].")'>";
+                                    echo "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash' viewBox='0 0 16 16'>";
+                                    echo "<path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z'/>";
+                                    echo "<path d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z'/>";
+                                    echo "</svg>";
+                                    echo "</button>";
+                                }
+                            }
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                    }
+                    else{
+                        echo "<tr><td class='align-middle' colspan='4'><span class='text-danger mb-3'>No data found.</span></td></tr>";
+                    }
+                }
+                echo "</tbody></table></div></div>"
             ?>
-            <table class="table table-borded">
-                <thead>
-                    <tr>
-                        <th scope="col" class="w-65">Title</th>
-                        <th scope="col" class="w-20">Author</th>
-                        <th scope="col" class="w-15">Util</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Test</td>
-                        <td>Admin</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="text-danger mb-3">
-                    <?php echo $msg; ?>
-            </div>
         </div>
+        <script>
+            function deleteForum(FTitle) {
+                if(delForum(FTitle)){
+                    alert('Delete forum successful!');
+                    window.location.reload();
+                }
+                else{
+                    alert('Delete forum failed!');
+                }
+            }
+        </script>
         <div class="modal fade" id="forumModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="forumModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
