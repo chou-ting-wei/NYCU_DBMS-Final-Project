@@ -1,5 +1,6 @@
 <?php
     error_reporting(E_ERROR | E_WARNING);
+    date_default_timezone_set("Asia/Taipei");
     
     include("classes/player.php");
     include("classes/team.php");
