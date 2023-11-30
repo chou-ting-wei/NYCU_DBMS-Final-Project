@@ -144,16 +144,17 @@
     function getForumList($FTitle){
         $connection = initDB();
 
-        $query = "";
+        $query = "SELECT * FROM Forum ORDER BY post_time DESC";
         $result = mysqli_query($connection, $query);
 
         $forumData = NULL;
         $forumID = 0;
 
-        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){ 
-            
+        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){            
             $forum = new Forum();
-
+            if ($forumID>0){
+                $forum->set_Forum($row);
+            }
             $forumData[$forumID] = $forum;
             $forumID = $forumID + 1;
         }
@@ -163,17 +164,24 @@
     }
 
     function addForum($FTitle, $FText, $username){
-
+        $connection = initDB();
+        $time=date("Y/m/d h:i:s");
+        $query="INSERT INTO Forum Values(".$FTitle.",".$FText.",".$username.",".$time.")";
+        mysqli_query($connection, $query);
+        closeDB($connection);
     }
 
     function delForum($FTilte){
-
+        $connection = initDB();
+        $query="DELETE FROM Forum WHERE title=".$FTitle;
+        mysqli_query($connection, $query);
+        closeDB($connection);
     }
 
     function getVoteList($VTitle){
         $connection = initDB();
 
-        $query = "";
+        $query = "SELECT * FROM Vote ORDER BY post_time DESC";
         $result = mysqli_query($connection, $query);
 
         $voteData = NULL;
@@ -182,7 +190,9 @@
         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){ 
             
             $vote = new Vote();
-
+            if ($voteID>0){
+                $vote->set_Vote($row);
+            }
             $voteData[$voteID] = $vote;
             $voteID = $voteID + 1;
         }
@@ -191,11 +201,31 @@
         return $voteData;
     }
     
-    function addVote($VTitle, $username){
+    function addVote($VTitle){
+        $connection = initDB();
+        $time=date("Y/m/d h:i:s");
+        $query="INSERT INTO Vote Values(".$VTitle.",".0.",".0.",".$time.")";
+        mysqli_query($connection, $query);
+        closeDB($connection);
+    }
 
+    function Vote($VTitle, $side){
+        $connection = initDB();
+        $query="";
+        if ($side==1){
+            $query="UPDATE Vote SET vote_1=vote_1+1 WHERE title=".$VTitle;
+        }
+        else{
+            $query="UPDATE Vote SET vote_2=vote_2+1 WHERE title=".$VTitle;
+        }
+        mysqli_query($connection, $query);
+        closeDB($connection);
     }
 
     function delVote($VTitle){
-
+        $connection = initDB();
+        $query="DELETE FROM Vote WHERE title=".$VTitle;
+        mysqli_query($connection, $query);
+        closeDB($connection);
     }
 ?>
