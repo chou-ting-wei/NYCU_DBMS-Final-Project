@@ -78,18 +78,6 @@
         </div>
     </nav>
     <body>
-        <?php
-            $search = "";
-            if(isset($_POST["search"])){
-                $search = $_POST["search"]; 
-            }
-            if($search != ""){
-                $forumData = getForumList($search);
-                if(count($forumData) > 0){
-
-                }
-            }
-        ?>
         <div class="container mt-4">
             <h3 class="fw-bolder">Forum</h3>
             <hr class="mt-3 mb-3"></hr>
@@ -132,8 +120,28 @@
             }, false);
         </script>
         <div class="container mt-3">
+            <?php
+                $search = "";
+                $msg = "";
+                if(isset($_POST["search"])){
+                    $search = $_POST["search"]; 
+                }
+                if($search != ""){
+                    $forumData = getForumList($search);
+                    $forumCnt = count($forumData);
+                    if($forumCnt > 0){
+                        for($index = 0; $index < $forumCnt; $index ++){
+                            $forum = $forumData[$index];
+                            echo "";
+                        }
+                    }
+                    else{
+                        $msg = "No result found.";
+                    }
+                }
+            ?>
             <div class="text-danger mb-3">
-                    <!-- <?php echo $msg; ?> -->
+                    <?php echo $msg; ?>
             </div>
         </div>
         <div class="modal fade" id="forumModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="forumModalLabel" aria-hidden="true">
