@@ -67,26 +67,48 @@
 
         $connection = initDB();
         // 確認是否存在 username
-        $query = "";
+        $query = "SELECT * FROM User WHERE username='".$username."'";
         $result = mysqli_query($connection, $query);
         if(mysqli_num_rows($result) > 0){
             return $ret;
         }
 
         // 加入此 username password
-        $query2 = "";
-        $result2 = mysqli_query($connection, $query);
+        $query2 = "INSERT INTO User Values(".$username.",".$password.")";
+        $result2 = mysqli_query($connection, $query2);
 
         closeDB($connection);
-        return $ret;
+        return $result2;
     }
 
     function getUserList(){
+        $connection = initDB();
 
+        $query = "SELECT * FROM User ORDER BY username";
+        $result = mysqli_query($connection, $query);
+
+        $userData = NULL;
+        $userID = 0;
+
+        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){            
+            $user = new User();
+            if ($userID>0){
+                $user->set_User($row);
+            }
+            $userData[$userID] = $user;
+            $userID = $userID + 1;
+        }
+
+        closeDB($connection);
+        return $forumData;
     }
 
-    function modifyPassword($username){
-        
+    function delUser($username){
+        $connection = initDB();
+        $query="DELETE FROM User WHERE username='".$username."'";
+        $b=mysqli_query($connection, $query);
+        closeDB($connection);
+        return $b;
     }
 
     function getPlayerList($PTitle){
@@ -168,15 +190,17 @@
         $connection = initDB();
         $time=date("Y/m/d h:i:s");
         $query="INSERT INTO Forum Values(".$FTitle.",".$FText.",".$username.",".$time.")";
-        mysqli_query($connection, $query);
+        $b=mysqli_query($connection, $query);
         closeDB($connection);
+        return $b;
     }
 
     function delForum($FTitle){
         $connection = initDB();
-        $query="DELETE FROM Forum WHERE title=".$FTitle;
-        mysqli_query($connection, $query);
+        $query="DELETE FROM Forum WHERE title='".$FTitle."'";
+        $b=mysqli_query($connection, $query);
         closeDB($connection);
+        return $b;
     }
 
     function getVoteList($VTitle){
@@ -206,27 +230,30 @@
         $connection = initDB();
         $time=date("Y/m/d h:i:s");
         $query="INSERT INTO Vote Values(".$VTitle.", 0, 0, ".$time.")";
-        mysqli_query($connection, $query);
+        $b=mysqli_query($connection, $query);
         closeDB($connection);
+        return $b;
     }
 
     function Vote($VTitle, $side){
         $connection = initDB();
         $query="";
         if ($side==1){
-            $query="UPDATE Vote SET vote_1=vote_1+1 WHERE title=".$VTitle;
+            $query="UPDATE Vote SET vote_1=vote_1+1 WHERE title='".$VTitle."'";
         }
         else{
-            $query="UPDATE Vote SET vote_2=vote_2+1 WHERE title=".$VTitle;
+            $query="UPDATE Vote SET vote_2=vote_2+1 WHERE title='".$VTitle."'";
         }
-        mysqli_query($connection, $query);
+        $b=mysqli_query($connection, $query);
         closeDB($connection);
+        return $b;
     }
 
     function delVote($VTitle){
         $connection = initDB();
-        $query="DELETE FROM Vote WHERE title=".$VTitle;
-        mysqli_query($connection, $query);
+        $query="DELETE FROM Vote WHERE title='".$VTitle."'";    
+        $b=mysqli_query($connection, $query);
         closeDB($connection);
+        return $b;
     }
 ?>
