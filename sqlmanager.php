@@ -171,7 +171,7 @@
         closeDB($connection);
     }
 
-    function delForum($FTilte){
+    function delForum($FTitle){
         $connection = initDB();
         $query="DELETE FROM Forum WHERE title=".$FTitle;
         mysqli_query($connection, $query);
