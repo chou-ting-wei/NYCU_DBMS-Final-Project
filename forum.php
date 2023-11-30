@@ -202,24 +202,11 @@
             }
         </script>
         <script>
-            function createCookie(name, value, days) {
-                var expires;
-                if (days) {
-                    var date = new Date();
-                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                    expires = "; expires=" + date.toGMTString();
-                }
-                else {
-                    expires = "";
-                }
-                document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
-            }
-
             function _addForum() {
                 var FTitle = document.getElementById('FTitle').value;
                 var FText = document.getElementById('FText').value;
-                createCookie("FTitle", FTitle, "1");
-                createCookie("FText", FText, "1");
+                document.cookie = "FTitle=" + FTitle;
+                document.cookie = "FText=" + FText;
     
                 if(FTitle != "" && FText != ""){
                     if(<?php echo $_SESSION["username"] == NULL ? 1 : 0; ?>){
@@ -227,7 +214,7 @@
                     }
                     else{
                         <?php
-                            if(addForum($_COOKIE["FTitle"], $_COOKIE["FText"], $_SESSION["username"])){
+                            if(isset($_COOKIE["FTitle"]) && isset($_COOKIE["FText"]) && addForum($_COOKIE["FTitle"], $_COOKIE["FText"], $_SESSION["username"])){
                                 echo "alert('Add forum successful!');";
                                 echo "window.location.reload();";
                             }
@@ -240,6 +227,9 @@
                 else{
                     alert('Add forum failed! Please fill in all fields.');
                 }
+
+                document.cookie = "FTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=forum.php;";
+                document.cookie = "FText=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=forum.php;";
             }
         </script>
         <div class="modal fade" id="forumModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="forumModalLabel" aria-hidden="true">
