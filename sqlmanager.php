@@ -100,7 +100,7 @@
         }
 
         closeDB($connection);
-        return $forumData;
+        return $userData;
     }
 
     function delUser($username){
