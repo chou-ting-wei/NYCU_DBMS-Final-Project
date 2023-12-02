@@ -163,10 +163,13 @@
                     if($forumCnt > 0){
                         for($index = 0; $index < $forumCnt; $index ++){
                             $forum = $forumData[$index]->get_all();
+                            echo "<pre>";
+                            print_r($forum);
+                            echo "</pre>";
                             echo "<tr>";
                             echo "<td class='align-middle'>".$forum[0]."</td>";
-                            echo "<td class='align-middle'>$forum[2]</td>";
-                            echo "<td class='align-middle'>$forum[3]</td>";
+                            echo "<td class='align-middle'>".$forum[2]."</td>";
+                            echo "<td class='align-middle'>".$forum[3]."</td>";
                             echo "<td class='align-middle'>";
                             if(isset($_SESSION['username'])){
                                 $username = $_SESSION['username'];
@@ -202,6 +205,19 @@
             }
         </script>
         <script>
+            <?php
+                if(isset($_COOKIE["FTitle"]) && isset($_COOKIE["FText"])){
+                    if(addForum($_COOKIE["FTitle"], $_COOKIE["FText"], $_SESSION["username"])){
+                        echo "document.cookie = 'FTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=forum.php;';";
+                        echo "document.cookie = 'FText=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=forum.php;';";
+                        echo "alert('Add forum successful!');";
+                        echo "window.location.reload();";
+                    }
+                    else{
+                        echo "alert('Add forum failed!');";
+                    }
+                }
+            ?>
             function _addForum() {
                 var FTitle = document.getElementById('FTitle').value;
                 var FText = document.getElementById('FText').value;
@@ -213,23 +229,12 @@
                         alert('Add forum failed! Please login first.');
                     }
                     else{
-                        <?php
-                            if(isset($_COOKIE["FTitle"]) && isset($_COOKIE["FText"]) && addForum($_COOKIE["FTitle"], $_COOKIE["FText"], $_SESSION["username"])){
-                                echo "alert('Add forum successful!');";
-                                echo "window.location.reload();";
-                            }
-                            else{
-                                echo "alert('Add forum failed!');";
-                            }
-                        ?>
+                        window.location.reload();
                     }
                 }
                 else{
                     alert('Add forum failed! Please fill in all fields.');
                 }
-
-                document.cookie = "FTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=forum.php;";
-                document.cookie = "FText=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=forum.php;";
             }
         </script>
         <div class="modal fade" id="forumModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="forumModalLabel" aria-hidden="true">

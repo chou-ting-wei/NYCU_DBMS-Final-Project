@@ -189,8 +189,8 @@
     function addForum($FTitle, $FText, $username){
         $connection = initDB();
         $time=date("Y/m/d h:i:s");
-        // $query="INSERT INTO Forum Values('".$FTitle."','".$FText."','".$username."','".$time."')";
-        $query="INSERT INTO Forum VALUES('test','test','test','1234')";
+        $query="INSERT INTO Forum Values('".$FTitle."','".$FText."','".$username."','".$time."')";
+        // $query="INSERT INTO Forum VALUES('test','test','test','1234')";
         $b=mysqli_query($connection, $query);
         closeDB($connection);
         return $b;
