@@ -74,7 +74,7 @@
         }
 
         // 加入此 username password
-        $query2 = "INSERT INTO User Values(".$username.",".$password.")";
+        $query2 = "INSERT INTO User Values('".$username."','".$password."')";
         $result2 = mysqli_query($connection, $query2);
 
         closeDB($connection);
@@ -189,7 +189,8 @@
     function addForum($FTitle, $FText, $username){
         $connection = initDB();
         $time=date("Y/m/d h:i:s");
-        $query="INSERT INTO Forum Values(".$FTitle.",".$FText.",".$username.",".$time.")";
+        // $query="INSERT INTO Forum Values('".$FTitle."','".$FText."','".$username."','".$time."')";
+        $query="INSERT INTO Forum VALUES('test','test','test','1234')";
         $b=mysqli_query($connection, $query);
         closeDB($connection);
         return $b;
@@ -229,7 +230,7 @@
     function addVote($VTitle){
         $connection = initDB();
         $time=date("Y/m/d h:i:s");
-        $query="INSERT INTO Vote Values(".$VTitle.", 0, 0, ".$time.")";
+        $query="INSERT INTO Vote Values('".$VTitle."', 0, 0, '".$time."')";
         $b=mysqli_query($connection, $query);
         closeDB($connection);
         return $b;
