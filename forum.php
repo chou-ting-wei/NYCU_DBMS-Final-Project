@@ -207,10 +207,12 @@
                 }
             ?>
             function _delForum(FTitle) {
-                document.cookie = "delFTitle=" + FTitle;
-
-                if(FTitle != ""){
+                if(FTitle){
+                    document.cookie = "delFTitle=" + FTitle;
                     window.location.reload();
+                }
+                else{
+                    alert('Delete forum failed! (ERR: FTitle undefined)');
                 }
             }
         </script>
@@ -231,14 +233,14 @@
             function _addForum() {
                 var FTitle = document.getElementById('FTitle').value;
                 var FText = document.getElementById('FText').value;
-                document.cookie = "addFTitle=" + FTitle;
-                document.cookie = "addFText=" + FText;
     
-                if(FTitle != "" && FText != ""){
+                if(FTitle && FText){
                     if(<?php echo $_SESSION["username"] == NULL ? 1 : 0; ?>){
                         alert('Add forum failed! Please login first.');
                     }
                     else{
+                        document.cookie = "addFTitle=" + FTitle;
+                        document.cookie = "addFText=" + FText;
                         window.location.reload();
                     }
                 }
