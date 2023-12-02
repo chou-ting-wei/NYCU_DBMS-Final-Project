@@ -78,7 +78,7 @@
     </nav>
     <body>
         <div class="container">
-            <div id="carouselSlides" class="carousel carousel-dark slide" data-bs-ride="carousel" data-bs-interval="8000">
+            <div id="carouselSlides" class="carousel carousel-dark slide" data-bs-ride="carousel" data-bs-interval="6000">
 
             <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselSlides" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -89,46 +89,42 @@
 
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="images/carousel/s1.jpg" class="d-block w-100" alt="第一張圖">
-                    <!--第一張圖字幕-->
-                    <div class="carousel-caption d-none d-md-block bg-body bg-opacity-50">
+                    <img src="images/carousel/s1.png" class="d-block w-100" alt="s1">
+                    <div class="carousel-caption d-none d-md-block bg-body bg-opacity-75">
                     <h5>NBA Opening Night</h5>
                     <p>TODO</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="images/carousel/s2.jpg" class="d-block w-100" alt="第二張圖">
-                    <!--第二張圖字幕-->
-                    <div class="carousel-caption d-none d-md-block bg-body bg-opacity-50">
+                    <img src="images/carousel/s2.jpg" class="d-block w-100" alt="s2">
+                    <div class="carousel-caption d-none d-md-block bg-body bg-opacity-75">
                     <h5>NBA Christmas Day</h5>
                     <p>TODO</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="images/carousel/s3.jpg" class="d-block w-100" alt="第三張圖">
-                    <!--第三張圖字幕-->
-                    <div class="carousel-caption d-none d-md-block bg-body bg-opacity-50">
+                    <img src="images/carousel/s3.png" class="d-block w-100" alt="s3">
+                    <div class="carousel-caption d-none d-md-block bg-body bg-opacity-75">
                     <h5>NBA All-Star Game</h5>
                     <p>TODO</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="images/carousel/s3.jpg" class="d-block w-100" alt="第四張圖">
-                    <!--第四張圖字幕-->
-                    <div class="carousel-caption d-none d-md-block bg-body bg-opacity-50">
+                    <img src="images/carousel/s4.png" class="d-block w-100" alt="s4">
+                    <div class="carousel-caption d-none d-md-block bg-body bg-opacity-75">
                     <h5>NBA Finals</h5>
                     <p>TODO</p>
                     </div>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselSlides" data-bs-slide="prev">
+            <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselSlides" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#carouselSlides" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
-            </button>
+            </button> -->
             </div>
         </div>
 
