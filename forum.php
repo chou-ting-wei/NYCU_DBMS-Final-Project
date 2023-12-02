@@ -194,22 +194,32 @@
             ?>
         </div>
         <script>
-            function _delForum(FTitle) {
-                if(delForum(FTitle)){
-                    alert('Delete forum successful!');
-                    window.location.reload();
+            <?php
+                if(isset($_COOKIE["delFTitle"])){
+                    if(delForum($_COOKIE["delFTitle"])){
+                        echo "document.cookie = 'delFTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=forum.php;';";
+                        echo "alert('Delete forum successful!');";
+                        echo "window.location.reload();";
+                    }
+                    else{
+                        echo "alert('Delete forum failed!');";
+                    }
                 }
-                else{
-                    alert('Delete forum failed!');
+            ?>
+            function _delForum(FTitle) {
+                document.cookie = "delFTitle=" + FTitle;
+
+                if(FTitle != ""){
+                    window.location.reload();
                 }
             }
         </script>
         <script>
             <?php
-                if(isset($_COOKIE["FTitle"]) && isset($_COOKIE["FText"])){
-                    if(addForum($_COOKIE["FTitle"], $_COOKIE["FText"], $_SESSION["username"])){
-                        echo "document.cookie = 'FTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=forum.php;';";
-                        echo "document.cookie = 'FText=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=forum.php;';";
+                if(isset($_COOKIE["addFTitle"]) && isset($_COOKIE["addFText"])){
+                    if(addForum($_COOKIE["addFTitle"], $_COOKIE["addFText"], $_SESSION["username"])){
+                        echo "document.cookie = 'addFTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=forum.php;';";
+                        echo "document.cookie = 'addFText=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=forum.php;';";
                         echo "alert('Add forum successful!');";
                         echo "window.location.reload();";
                     }
@@ -221,8 +231,8 @@
             function _addForum() {
                 var FTitle = document.getElementById('FTitle').value;
                 var FText = document.getElementById('FText').value;
-                document.cookie = "FTitle=" + FTitle;
-                document.cookie = "FText=" + FText;
+                document.cookie = "addFTitle=" + FTitle;
+                document.cookie = "addFText=" + FText;
     
                 if(FTitle != "" && FText != ""){
                     if(<?php echo $_SESSION["username"] == NULL ? 1 : 0; ?>){
