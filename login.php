@@ -59,7 +59,7 @@
                 $username = $_POST["username"];  
             if(isset($_POST["password"]))
                 $password = $_POST["password"];
-            if($username != "" && $password != ""){
+            if($username && $password){
                 if(($username == "admin" && $password == "admintest") || ($username == "test" && $password == "testtest")){
                     $_SESSION["login_session"] = true;
                     $_SESSION["username"] = $username;

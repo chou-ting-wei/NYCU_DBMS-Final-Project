@@ -58,7 +58,7 @@
                 $username = $_POST["username"];  
             if(isset($_POST["password"]))
                 $password = $_POST["password"];
-            if($username != "" && $password != ""){
+            if($username && $password){
                 if(($username == "admin" && $password == "admintest") || ($username == "test" && $password == "testtest")){
                     echo "<script> alert('Register successful!'); location.href='login.php'</script>";
                 }
