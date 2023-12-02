@@ -132,13 +132,25 @@
             </div>
         </div>
         <script>
+            <?php
+                if(isset($_COOKIE["delUsername"])){
+                    if(delUser($_COOKIE["delUsername"])){
+                        echo "document.cookie = 'delUsername=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=admin.php;';";
+                        echo "alert('Delete user successful!');";
+                        echo "window.location.reload();";
+                    }
+                    else{
+                        echo "alert('Delete user failed!');";
+                    }
+                }
+            ?>
             function _delUser(username) {
-                if(delUser(username)){
-                    alert('Delete user successful!');
+                if(username){
+                    document.cookie = "delUsername=" + username;
                     window.location.reload();
                 }
                 else{
-                    alert('Delete user failed!');
+                    alert('Delete user failed! (ERR: username undefined)');
                 }
             }
         </script>
