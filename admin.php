@@ -102,7 +102,7 @@
                     </thead>
                     <tbody>
                         <?php
-                            $userData = getUserList();
+                            $userData = getUserList("");
                             $userCnt = 0;
                             if($userData != NULL){
                                 $userCnt = count($userData);

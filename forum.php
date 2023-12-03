@@ -90,15 +90,26 @@
         </div>
     </nav>
     <body>
-        <?php
-            $search = "";
-            $msg = "";
-            if(isset($_POST["search"])){
-                $search = $_POST["search"]; 
-                $_SESSION["forum_search"] = $search;
-                header("Location: forum.php");
+        <script>
+            <?php
+                $search = "";
+                if(isset($_COOKIE["searchFTitle"])){
+                    $search = $_COOKIE["searchFTitle"];
+                    echo "document.cookie = 'searchFTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=forum.php;';";
+                }
+            ?>
+            function _searchForum() {
+                var searchFTitle = document.getElementById('search').value;
+    
+                if(searchFTitle){
+                    document.cookie = "searchFTitle=" + searchFTitle;
+                }
+                window.location.reload();
             }
-        ?>
+        </script>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="submitBtn" onclick="_addForum()">Submit</button>
+                    </div>
         <div class="container mt-4">
             <h3 class="fw-bolder">Forum</h3>
             <hr class="mt-3 mb-3"></hr>
@@ -106,18 +117,16 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 me-auto">
-                        <form id="searchForm" class="need-validation" action=forum.php method="post">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="<?php echo $_SESSION["forum_search"]?>">
-                                <button class="btn btn-secondary" type="submit">
-                                &nbsp;
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                                </svg>
-                                &nbsp;
-                                </button>
-                            </div>
-                        </form>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="<?php echo isset($_COOKIE["searchFTitle"]) ? $_COOKIE["searchFTitle"] : '' ?>">
+                            <button class="btn btn-secondary" type="button" id="searchBtn" onclick="_searchForum()">
+                            &nbsp;
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
+                            &nbsp;
+                            </button>
+                        </div>
                     </div>
                     <div class="col-auto">
                         <button class="btn btn-secondary" type="button" href="#" data-bs-toggle="modal" data-bs-target="#forumModal" <?php echo $_SESSION["username"] == NULL ? 'disabled' : ''; ?>>
