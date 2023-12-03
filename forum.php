@@ -107,9 +107,6 @@
                 window.location.reload();
             }
         </script>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="submitBtn" onclick="_addForum()">Submit</button>
-                    </div>
         <div class="container mt-4">
             <h3 class="fw-bolder">Forum</h3>
             <hr class="mt-3 mb-3"></hr>
