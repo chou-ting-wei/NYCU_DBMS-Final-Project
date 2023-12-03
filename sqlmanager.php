@@ -53,7 +53,7 @@
         $ret = false;
 
         $connection = initDB();
-        $query = "SELECT * FROM User WHERE password='".$password."' AND username='".$username."'";
+        $query = "SELECT * FROM User WHERE password='$password' AND username='$username'";
         $result = mysqli_query($connection, $query);
         if(mysqli_num_rows($result) > 0){
             $ret = true;
@@ -68,24 +68,24 @@
 
         $connection = initDB();
         // 確認是否存在 username
-        $query = "SELECT * FROM User WHERE username='".$username."'";
+        $query = "SELECT * FROM User WHERE username='$username'";
         $result = mysqli_query($connection, $query);
         if(mysqli_num_rows($result) > 0){
             return $ret;
         }
 
         // 加入此 username password
-        $query2 = "INSERT INTO User Values('".$username."','".$password."')";
+        $query2 = "INSERT INTO User Values('$username','$password')";
         $result2 = mysqli_query($connection, $query2);
 
         closeDB($connection);
         return $result2;
     }
 
-    function getUserList(){
+    function getUserList($name){
         $connection = initDB();
 
-        $query = "SELECT * FROM User ORDER BY username";
+        $query = "SELECT * FROM User WHERE username LIKE '%$name%' ORDER BY username";
         $result = mysqli_query($connection, $query);
 
         $userData = NULL;
@@ -104,7 +104,7 @@
 
     function delUser($username){
         $connection = initDB();
-        $query="DELETE FROM User WHERE username='".$username."'";
+        $query="DELETE FROM User WHERE username='$username'";
         $b=mysqli_query($connection, $query);
         closeDB($connection);
         return $b;
@@ -117,7 +117,7 @@
     function getPlayerInfo($PName){
         $connection = initDB();
     
-        $query = "SELECT * FROM Players WHERE PName='".$PName."'";
+        $query = "SELECT * FROM Players WHERE PName='$PName'";
         $result = mysqli_query($connection, $query);
 
         $playerData = NULL;
@@ -166,7 +166,7 @@
     function getForumList($FTitle){
         $connection = initDB();
 
-        $query = "SELECT * FROM Forum ORDER BY post_time DESC";
+        $query = "SELECT * FROM Forum WHERE title LIKE '%$FTitle%' ORDER BY post_time DESC";
         $result = mysqli_query($connection, $query);
 
         $forumData = NULL;
@@ -186,7 +186,7 @@
     function addForum($FTitle, $FText, $username){
         $connection = initDB();
         $time=date("Y/m/d h:i:s");
-        $query="INSERT INTO Forum Values('".$FTitle."','".$FText."','".$username."','".$time."')";
+        $query="INSERT INTO Forum Values('$FTitle','$FText','$username','$time')";
         $b=mysqli_query($connection, $query);
         closeDB($connection);
         return $b;
@@ -194,7 +194,7 @@
 
     function delForum($FTitle){
         $connection = initDB();
-        $query="DELETE FROM Forum WHERE title='".$FTitle."'";
+        $query="DELETE FROM Forum WHERE title='$FTitle'";
         $b=mysqli_query($connection, $query);
         closeDB($connection);
         return $b;
@@ -203,7 +203,7 @@
     function getVoteList($VTitle){
         $connection = initDB();
 
-        $query = "SELECT * FROM Vote ORDER BY post_time DESC";
+        $query = "SELECT * FROM Vote WHERE title LIKE '%$VTitle%' ORDER BY post_time DESC";
         $result = mysqli_query($connection, $query);
 
         $voteData = NULL;
@@ -223,7 +223,7 @@
     function addVote($VTitle){
         $connection = initDB();
         $time=date("Y/m/d h:i:s");
-        $query="INSERT INTO Vote Values('".$VTitle."', 0, 0, '".$time."')";
+        $query="INSERT INTO Vote Values('$VTitle', 0, 0, '$time')";
         $b=mysqli_query($connection, $query);
         closeDB($connection);
         return $b;
@@ -233,10 +233,10 @@
         $connection = initDB();
         $query="";
         if ($side==1){
-            $query="UPDATE Vote SET vote_1=vote_1+1 WHERE title='".$VTitle."'";
+            $query="UPDATE Vote SET vote_1=vote_1+1 WHERE title='$VTitle'";
         }
         else{
-            $query="UPDATE Vote SET vote_2=vote_2+1 WHERE title='".$VTitle."'";
+            $query="UPDATE Vote SET vote_2=vote_2+1 WHERE title='$VTitle'";
         }
         $b=mysqli_query($connection, $query);
         closeDB($connection);
@@ -245,7 +245,7 @@
 
     function delVote($VTitle){
         $connection = initDB();
-        $query="DELETE FROM Vote WHERE title='".$VTitle."'";    
+        $query="DELETE FROM Vote WHERE title='$VTitle'";    
         $b=mysqli_query($connection, $query);
         closeDB($connection);
         return $b;
