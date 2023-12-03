@@ -4,13 +4,6 @@
         private $FText;
         private $username;
         private $post_time;
-        
-        // function set_Forum($title,$text,$usname,$time){
-        //     $this->FTitle=$title;
-        //     $this->FText=$text;
-        //     $this->username=$usname;
-        //     $this->post_time=$time;
-        // }
 
         function set_Forum($row){
             $this->FTitle=$row["title"];

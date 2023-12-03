@@ -6,10 +6,10 @@
         private $post_time;
 
         function set_Vote($row){
-            $this->VTitle=$row[0];
-            $this->V_1=$row[1];
-            $this->V_2=$row[2];
-            $this->post_time=$row[3];
+            $this->VTitle=$row["title"];
+            $this->V_1=$row["vote_1"];
+            $this->V_2=$row["vote_2"];
+            $this->post_time=$row["post_time"];
         }
     
         function get_all(){

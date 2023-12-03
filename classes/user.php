@@ -3,8 +3,8 @@
         private $username;
         private $password;
         function set_User($row){
-            $this->username=$row[0];
-            $this->password=$row[1];
+            $this->username=$row["username"];
+            $this->password=$row["password"];
         }
         function get_username(){
             return $this->username;

@@ -92,9 +92,7 @@
 
         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){            
             $user = new User();
-            if ($userID>0){
-                $user->set_User($row);
-            }
+            $user->set_User($row);
             $userData[$userID] = $user;
             $userID = $userID + 1;
         }
@@ -188,7 +186,6 @@
         $connection = initDB();
         $time=date("Y/m/d h:i:s");
         $query="INSERT INTO Forum Values('".$FTitle."','".$FText."','".$username."','".$time."')";
-        // $query="INSERT INTO Forum VALUES('test','test','test','1234')";
         $b=mysqli_query($connection, $query);
         closeDB($connection);
         return $b;
@@ -212,11 +209,8 @@
         $voteID = 0;
 
         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){ 
-            
             $vote = new Vote();
-            if ($voteID>0){
-                $vote->set_Vote($row);
-            }
+            $vote->set_Vote($row);
             $voteData[$voteID] = $vote;
             $voteID = $voteID + 1;
         }
