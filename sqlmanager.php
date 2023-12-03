@@ -175,9 +175,7 @@
 
         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){            
             $forum = new Forum();
-            if ($forumID>0){
-                $forum->set_Forum($row);
-            }
+            $forum->set_Forum($row);
             $forumData[$forumID] = $forum;
             $forumID = $forumID + 1;
         }
