@@ -93,7 +93,7 @@
                     <div class="carousel-caption d-none d-md-block bg-body bg-opacity-75">
                     <h5>NBA Opening Night</h5>
                     <p>NBA Opening Night marks the beginning of the regular season. 
-                    The opening night games serve as a showcase for the league, featuring top-tier talent and setting the tone for the season ahead. </p>
+                    It serve as a showcase for the league, featuring top-tier talent and setting the tone for the season ahead. </p>
                     </div>
                 </div>
                 <div class="carousel-item">
