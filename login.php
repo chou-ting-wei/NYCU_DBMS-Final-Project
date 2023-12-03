@@ -60,7 +60,8 @@
             if(isset($_POST["password"]))
                 $password = $_POST["password"];
             if($username && $password){
-                if(($username == "admin" && $password == "admintest") || ($username == "test" && $password == "testtest")){
+                // if(($username == "admin" && $password == "admintest") || ($username == "test" && $password == "testtest")){
+                if(chkLogin($username, $password)){
                     $_SESSION["login_session"] = true;
                     $_SESSION["username"] = $username;
                     header("Location: index.php");

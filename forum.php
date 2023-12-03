@@ -96,6 +96,7 @@
             if(isset($_POST["search"])){
                 $search = $_POST["search"]; 
                 $_SESSION["forum_search"] = $search;
+                header("Location: forum.php");
             }
         ?>
         <div class="container mt-4">

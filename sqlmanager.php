@@ -6,6 +6,7 @@
     include("classes/team.php");
     include("classes/forum.php");
     include("classes/vote.php");
+    include("classes/user.php");
 
     $databaseURL;
     $databaseUName;
@@ -52,7 +53,7 @@
         $ret = false;
 
         $connection = initDB();
-        $query = "SELECT * FROM students WHERE password='".$password."' AND username='".$username."'";
+        $query = "SELECT * FROM User WHERE password='".$password."' AND username='".$username."'";
         $result = mysqli_query($connection, $query);
         if(mysqli_num_rows($result) > 0){
             $ret = true;
