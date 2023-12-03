@@ -92,39 +92,42 @@
                     <img src="images/carousel/s1.png" class="d-block w-100" alt="s1">
                     <div class="carousel-caption d-none d-md-block bg-body bg-opacity-75">
                     <h5>NBA Opening Night</h5>
-                    <p>TODO</p>
+                    <p>NBA Opening Night marks the beginning of the regular season. 
+                    The opening night games serve as a showcase for the league, featuring top-tier talent and setting the tone for the season ahead. </p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="images/carousel/s2.jpg" class="d-block w-100" alt="s2">
+                    <img src="images/carousel/s2.png" class="d-block w-100" alt="s2">
                     <div class="carousel-caption d-none d-md-block bg-body bg-opacity-75">
                     <h5>NBA Christmas Day</h5>
-                    <p>TODO</p>
+                    <p>NBA Christmas Day is an annual tradition on December 25th. 
+                    It has become a highly anticipated event for basketball fans, offering a day filled with competitive and entertaining games featuring some of the league's top teams and players.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="images/carousel/s3.png" class="d-block w-100" alt="s3">
                     <div class="carousel-caption d-none d-md-block bg-body bg-opacity-75">
                     <h5>NBA All-Star Game</h5>
-                    <p>TODO</p>
+                    <p>The NBA All-Star Game is an annual exhibition basketball game held during the NBA All-Star Weekend. 
+                    It features the league's top players, usually divided into teams representing the Eastern and Western Conferences.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="images/carousel/s4.png" class="d-block w-100" alt="s4">
                     <div class="carousel-caption d-none d-md-block bg-body bg-opacity-75">
                     <h5>NBA Finals</h5>
-                    <p>TODO</p>
+                    <p>The NBA Finals is the culmination of the NBA season, typically take place in June and involve the Eastern Conference champion facing off against the Western Conference champion. </p>
                     </div>
                 </div>
             </div>
-            <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselSlides" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselSlides" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#carouselSlides" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
-            </button> -->
+            </button>
             </div>
         </div>
 
