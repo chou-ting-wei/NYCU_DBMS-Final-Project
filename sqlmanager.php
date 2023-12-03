@@ -243,6 +243,10 @@
         return $b;
     }
 
+    function chkVote($username, $VTitle){
+
+    }
+
     function delVote($VTitle){
         $connection = initDB();
         $query="DELETE FROM Vote WHERE title='$VTitle'";    
