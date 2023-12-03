@@ -59,7 +59,8 @@
             if(isset($_POST["password"]))
                 $password = $_POST["password"];
             if($username && $password){
-                if(($username == "admin" && $password == "admintest") || ($username == "test" && $password == "testtest")){
+                // if(($username == "admin" && $password == "admintest") || ($username == "test" && $password == "testtest")){
+                if(addRegister($username, $password)){
                     echo "<script> alert('Register successful!'); location.href='login.php'</script>";
                 }
                 else{

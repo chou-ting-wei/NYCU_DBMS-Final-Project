@@ -103,7 +103,10 @@
                     <tbody>
                         <?php
                             $userData = getUserList();
-                            $userCnt = count($userData);
+                            $userCnt = 0;
+                            if($userData != NULL){
+                                $userCnt = count($userData);
+                            }
                             if($userCnt > 0){
                                 for($index = 0; $index < $userCnt; $index ++){
                                     $user = $userData[$index];
