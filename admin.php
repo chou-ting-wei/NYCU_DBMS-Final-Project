@@ -110,9 +110,9 @@
                             if($userCnt > 0){
                                 for($index = 0; $index < $userCnt; $index ++){
                                     $user = $userData[$index];
-                                    echo "<pre>";
-                                    print_r($user);
-                                    echo "</pre>";
+                                    // echo "<pre>";
+                                    // print_r($user);
+                                    // echo "</pre>";
                                     echo "<tr>";
                                     echo "<td class='align-middle'>".$user->get_username()."</td>";
                                     echo "<td class='align-middle'>".$user->get_password()."</td>";
