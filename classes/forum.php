@@ -5,11 +5,18 @@
         private $username;
         private $post_time;
         
+        // function set_Forum($title,$text,$usname,$time){
+        //     $this->FTitle=$title;
+        //     $this->FText=$text;
+        //     $this->username=$usname;
+        //     $this->post_time=$time;
+        // }
+
         function set_Forum($row){
-            $this->FTitle=$row[0];
-            $this->FText=$row[1];
-            $this->username=$row[2];
-            $this->post_time=$row[3];
+            $this->FTitle=$row["title"];
+            $this->FText=$row["content"];
+            $this->username=$row["post_username"];
+            $this->post_time=$row["post_time"];
         }
     
         function get_all(){
