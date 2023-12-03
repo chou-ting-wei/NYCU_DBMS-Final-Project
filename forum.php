@@ -130,6 +130,29 @@
                 </div>
             </div>
         </div>
+        <script>
+            <?php
+                if(isset($_COOKIE["delFTitle"])){
+                    if(delForum($_COOKIE["delFTitle"])){
+                        echo "document.cookie = 'delFTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=forum.php;';";
+                        echo "alert('Delete forum successful!');";
+                        echo "window.location.reload();";
+                    }
+                    else{
+                        echo "alert('Delete forum failed!');";
+                    }
+                }
+            ?>
+            function _delForum(FTitle) {
+                if(FTitle){
+                    document.cookie = "delFTitle=" + FTitle;
+                    window.location.reload();
+                }
+                else{
+                    alert('Delete forum failed! (ERR: FTitle undefined)');
+                }
+            }
+        </script>
         <div class="container mt-3">
             <?php
                 echo "<div class='table-responsive'>";
@@ -163,9 +186,9 @@
                     if($forumCnt > 0){
                         for($index = 0; $index < $forumCnt; $index ++){
                             $forum = $forumData[$index]->get_all();
-                            echo "<pre>";
-                            print_r($forum);
-                            echo "</pre>";
+                            // echo "<pre>";
+                            // print_r($forum);
+                            // echo "</pre>";
                             echo "<tr>";
                             echo "<td class='align-middle'>".$forum[0]."</td>";
                             echo "<td class='align-middle'>".$forum[2]."</td>";
@@ -174,7 +197,7 @@
                             if(isset($_SESSION['username'])){
                                 $username = $_SESSION['username'];
                                 if($username == "admin" || $username == $forum[2]){
-                                    echo "<button class='btn btn-danger' type='button' onclick='_delForum(".$forum[0].")'>";
+                                    echo "<button class='btn btn-danger' type='button' onclick=\"_delForum('".$forum[0]."')\">";
                                     echo "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash' viewBox='0 0 16 16'>";
                                     echo "<path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z'/>";
                                     echo "<path d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z'/>";
@@ -193,29 +216,6 @@
                 echo "</tbody></table></div></div>"
             ?>
         </div>
-        <script>
-            <?php
-                if(isset($_COOKIE["delFTitle"])){
-                    if(delForum($_COOKIE["delFTitle"])){
-                        echo "document.cookie = 'delFTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=forum.php;';";
-                        echo "alert('Delete forum successful!');";
-                        echo "window.location.reload();";
-                    }
-                    else{
-                        echo "alert('Delete forum failed!');";
-                    }
-                }
-            ?>
-            function _delForum(FTitle) {
-                if(FTitle){
-                    document.cookie = "delFTitle=" + FTitle;
-                    window.location.reload();
-                }
-                else{
-                    alert('Delete forum failed! (ERR: FTitle undefined)');
-                }
-            }
-        </script>
         <script>
             <?php
                 if(isset($_COOKIE["addFTitle"]) && isset($_COOKIE["addFText"])){
