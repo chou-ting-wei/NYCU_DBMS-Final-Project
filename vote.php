@@ -27,6 +27,18 @@
             -ms-user-select: none;
             user-select: none;
         }
+        .w-5{
+            width: 5%;
+        }
+        .w-10{
+            width: 10%;
+        }
+        .w-20{
+            width: 20%;
+        }
+        .w-35{
+            width: 35%;
+        }
     </style>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -78,10 +90,191 @@
         </div>
     </nav>
     <body>
+        <script>
+            <?php
+                $search = "";
+                if(isset($_COOKIE["searchVTitle"])){
+                    $search = $_COOKIE["searchVTitle"];
+                    echo "document.cookie = 'searchVTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=vote.php;';";
+                }
+            ?>
+            function _searchVote() {
+                var searchVTitle = document.getElementById('search').value;
+    
+                if(searchVTitle){
+                    document.cookie = "searchVTitle=" + searchVTitle;
+                }
+                window.location.reload();
+            }
+        </script>
         <div class="container mt-4">
             <h3 class="fw-bolder">Vote</h3>
             <hr class="mt-3 mb-3"></hr>
-            
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 me-auto">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="<?php echo isset($_COOKIE["searchVTitle"]) ? $_COOKIE["searchVTitle"] : '' ?>">
+                            <button class="btn btn-secondary" type="button" id="searchBtn" onclick="_searchVote()">
+                            &nbsp;
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
+                            &nbsp;
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-secondary" type="button" href="#" data-bs-toggle="modal" data-bs-target="#voteModal" <?php echo $_SESSION["username"] == NULL ? 'disabled' : ''; ?>>
+                            &nbsp;
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                            </svg>
+                            &nbsp;
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            <?php
+                if(isset($_COOKIE["delVTitle"])){
+                    if(delVote($_COOKIE["delVTitle"])){
+                        echo "document.cookie = 'delVTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=vote.php;';";
+                        echo "alert('Delete vote successful!');";
+                        echo "window.location.reload();";
+                    }
+                    else{
+                        echo "alert('Delete vote failed!');";
+                    }
+                }
+            ?>
+            function _delVote(VTitle) {
+                if(VTitle){
+                    document.cookie = "delVTitle=" + VTitle;
+                    window.location.reload();
+                }
+                else{
+                    alert('Delete vote failed! (ERR: Title undefined)');
+                }
+            }
+        </script>
+         <div class="container mt-3">
+            <?php
+                echo "<div class='table-responsive'>";
+                echo "<table class='table table-borded'>";
+                echo "<thead><tr>";
+                echo "<th scope='col' class='w-35 align-middle'>Title</th>";
+                echo "<th scope='col' class='w-10 align-middle'>L</th>";
+                echo "<th scope='col' class='w-20 align-middle'>M</th>";
+                echo "<th scope='col' class='w-10 align-middle'>R</th>";
+                echo "<th scope='col' class='w-20 align-middle'>Time</th>";
+                echo "<th scope='col' class='w-5 align-middle'></th>";
+                echo "</tr></thead>";
+                echo "<tbody>";
+                if($search != ""){
+                    // $voteData = getVoteList($search);
+                    // $voteCnt = 0;
+                    // if($voteData != NULL){
+                    //     $voteCnt = count($voteData);
+                    // }
+                    // if($voteCnt > 0){
+                    //     for($index = 0; $index < $voteCnt; $index ++){
+                    //         $vote = $voteData[$index]->get_all();
+                            
+                    //     }
+                    // }
+                    // else{
+                        echo "<tr><td class='align-middle' colspan='6'><span class='text-danger mb-3'>No result found.</span></td></tr>";
+                    // }
+                }
+                else{
+                    $voteData = getVoteList("");
+                    $voteCnt = 0;
+                    if($voteData != NULL){
+                        $voteCnt = count($voteData);
+                    }
+                    if($voteCnt > 0){
+                        for($index = 0; $index < $voteCnt; $index ++){
+                            $vote = $voteData[$index]->get_all();
+                            echo "<pre>";
+                            print_r($vote);
+                            echo "</pre>";
+                            echo "<tr>";
+                            echo "<td class='align-middle'>".$vote[0]."</td>";
+                            echo "<td class='align-middle'>".$vote[1]."</td>";
+                            echo "<td class='align-middle'></td>";
+                            echo "<td class='align-middle'>".$vote[2]."</td>";
+                            echo "<td class='align-middle'>".$vote[3]."</td>";
+                            echo "<td class='align-middle'>";
+                            if(isset($_SESSION['username'])){
+                                $username = $_SESSION['username'];
+                                if($username == "admin"){
+                                    echo "<button class='btn btn-danger' type='button' onclick=\"_delVote('".$vote[0]."')\">";
+                                    echo "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash' viewBox='0 0 16 16'>";
+                                    echo "<path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z'/>";
+                                    echo "<path d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z'/>";
+                                    echo "</svg>";
+                                    echo "</button>";
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        echo "<tr><td class='align-middle' colspan='6'><span class='text-danger mb-3'>No data found.</span></td></tr>";
+                    }
+                }
+                echo "</tbody></table></div></div>"
+            ?>
+        </div>
+        <script>
+            <?php
+                if(isset($_COOKIE["addVTitle"])){
+                    if(addVote($_COOKIE["addVTitle"])){
+                        echo "document.cookie = 'addVTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=vote.php;';";
+                        echo "alert('Add vote successful!');";
+                        echo "window.location.reload();";
+                    }
+                    else{
+                        echo "alert('Add vote failed!');";
+                    }
+                }
+            ?>
+            function _addVote() {
+                var VTitle = document.getElementById('VTitle').value;
+    
+                if(VTitle){
+                    if(VTitle.length > 20){
+                        alert('Add vote failed! (ERR: The length of Title is greater than 20.)');
+                    }
+                    else{
+                        document.cookie = "addVTitle=" + VTitle; path="vote.php";
+                        window.location.reload();
+                    }
+                }
+                else{
+                    alert('Add vote failed! Please fill in all fields.');
+                }
+            }
+        </script>
+        <div class="modal fade" id="voteModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="voteModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="forumModalLabel">New Vote</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="VTitle" class="form-label">Title</label>
+                            <input type="text" name="title" class="form-control" id="VTitle">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="submitBtn" onclick="_addVote()">Submit</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Bootstrap JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

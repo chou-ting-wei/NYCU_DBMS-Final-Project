@@ -6,9 +6,6 @@
         $_SESSION["login_session"] = false;
         $_SESSION["username"] = NULL;
     }
-    if(!isset($_SESSION["forum_search"])){
-        $_SESSION["forum_search"] = NULL;
-    }
     include("sqlmanager.php");
 ?>
 <html>
