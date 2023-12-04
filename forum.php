@@ -213,6 +213,7 @@
                     else{
                         echo "<tr><td class='align-middle' colspan='4'><span class='text-danger mb-3'>No result found.</span></td></tr>";
                     }
+                    echo "</tbody></table></div></div>";
                 }
                 else{
                     $forumData = getForumList("");

@@ -33,11 +33,20 @@
         .w-10{
             width: 10%;
         }
+        .w-15{
+            width: 15%;
+        }
+        .w-20{
+            width: 20%;
+        }
         .w-30{
             width: 30%;
         }
         .w-35{
             width: 35%;
+        }
+        .w-80{
+            width: 80%;
         }
     </style>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -158,16 +167,40 @@
                     alert('Delete vote failed! (ERR: Title undefined)');
                 }
             }
+            <?php
+                if(isset($_COOKIE["VTitle"]) && isset($_COOKIE["VSide"])){
+                    if(Vote($_COOKIE["VTitle"], $_COOKIE["VSide"])){
+                        echo "document.cookie = 'VTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=vote.php;';";
+                        echo "document.cookie = 'VSide=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=vote.php;';";
+                        echo "alert('Vote successful!');";
+                        echo "window.location.reload();";
+                    }
+                    else{
+                        echo "alert('Vote failed!');";
+                    }
+                }
+            ?>
+            function _Vote(VTitle, side) {
+                if(VTitle){
+                    document.cookie = "VTitle=" + VTitle;
+                    document.cookie = "VSide=" + side;
+                    window.location.reload();
+                }
+                else{
+                    alert('Vote failed! (ERR: Title undefined)');
+                }
+            }
         </script>
          <div class="container mt-3">
             <?php
                 echo "<div class='table-responsive'>";
                 echo "<table class='table table-borded'>";
                 echo "<thead><tr>";
-                echo "<th scope='col' class='w-35 align-middle'>Title</th>";
+                echo "<th scope='col' class='w-20 align-middle'>Title</th>";
                 echo "<th scope='col' class='w-5 align-middle text-center'>L</th>";
                 echo "<th scope='col' class='w-30 align-middle text-center'></th>";
                 echo "<th scope='col' class='w-5 align-middle text-center'>R</th>";
+                echo "<th scope='col' class='w-15 align-middle'>Author</th>";
                 echo "<th scope='col' class='w-20 align-middle'>Time</th>";
                 echo "<th scope='col' class='w-5 align-middle'></th>";
                 echo "</tr></thead>";
@@ -185,7 +218,7 @@
                     //     }
                     // }
                     // else{
-                        echo "<tr><td class='align-middle' colspan='6'><span class='text-danger mb-3'>No result found.</span></td></tr>";
+                        echo "<tr><td class='align-middle' colspan='7'><span class='text-danger mb-3'>No result found.</span></td></tr>";
                     // }
                 }
                 else{
@@ -210,13 +243,14 @@
                                 echo "<div class='progress-bar' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'></div>";
                             }
                             else{
-                                $tmp = round($vote[1] / ($vote[1] + $vote[2]));
+                                $tmp = round($vote[1] * 100 / ($vote[1] + $vote[2]));
                                 echo "<div class='progress-bar' role='progressbar' style='width: ".$tmp."%' aria-valuenow='".$tmp."' aria-valuemin='0' aria-valuemax='100'></div>";
                                 echo "<div class='progress-bar bg-danger' role='progressbar' style='width: ".(100 - $tmp)."%' aria-valuenow='".(100 - $tmp)."' aria-valuemin='0' aria-valuemax='100'></div>";
                             }
                             echo "</div>";
                             echo "</td>";
                             echo "<td class='align-middle text-center'>".$vote[2]."</td>";
+                            echo "<td class='align-middle'>".$vote[3]."</td>";
                             echo "<td class='align-middle'>".$vote[3]."</td>";
                             echo "<td class='align-middle'>";
                             if(isset($_SESSION['username'])){
@@ -232,25 +266,79 @@
                             }
                             echo "</td>";
                             echo "</tr>";
-                            echo "<div class='modal fade' id='voteModalIdx".$index."' tabindex='-1' data-bs-backdrop='static' data-bs-keyboard='false' aria-labelledby='voteModalLabel' aria-hidden='true'>";
-                            echo "<div class='modal-dialog modal-lg'>";
-                            echo "<div class='modal-content'>";
-                            echo "<div class='modal-header'>";
-                            echo "<h5 class='modal-title' id='voteModalIdx".$index."Label'>".$vote[0]."</h5>";
-                            echo "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>";
-                            echo "</div>";
-                            echo "<div class='modal-body'>";
-                            // echo "<div class='mb-3' style='word-break:break-all'>".$forum[1]."</div>";
-                            echo "</div>";
-                            // echo "<div class='modal-footer text-secondary'>".$forum[2]."</div>";
-                            echo "</div></div></div>";
                         }
                     }
                     else{
-                        echo "<tr><td class='align-middle' colspan='6'><span class='text-danger mb-3'>No data found.</span></td></tr>";
+                        echo "<tr><td class='align-middle' colspan='7'><span class='text-danger mb-3'>No data found.</span></td></tr>";
                     }
                 }
-                echo "</tbody></table></div></div>"
+                echo "</tbody></table></div></div>";
+                if($voteCnt > 0){
+                    for($index = 0; $index < $voteCnt; $index ++){
+                        $vote = $voteData[$index]->get_all();
+                        echo "<div class='modal fade' id='voteModalIdx".$index."' tabindex='-1' data-bs-backdrop='static' data-bs-keyboard='false' aria-labelledby='voteModalLabel' aria-hidden='true'>";
+                        echo "<div class='modal-dialog modal-lg'>";
+                        echo "<div class='modal-content'>";
+                        echo "<div class='modal-header'>";
+                        echo "<h5 class='modal-title' id='voteModalIdx".$index."Label'>".$vote[0]."</h5>";
+                        echo "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>";
+                        echo "</div>";
+                        echo "<div class='modal-body'>";
+                        echo "<div class='table-responsive'>";
+                        echo "<table class='table table-borded'>";
+                        echo "<thead><tr>";
+                        echo "<th scope='col' class='w-5 align-middle'></th>";
+                        echo "<th scope='col' class='w-5 align-middle text-center'>L</th>";
+                        echo "<th scope='col' class='w-80 align-middle text-center'></th>";
+                        echo "<th scope='col' class='w-5 align-middle text-center'>R</th>";
+                        echo "<th scope='col' class='w-5 align-middle'></th>";
+                        echo "</tr></thead>";
+
+                        echo "<tbody>";
+                        echo "<tr>";
+                        echo "<td class='align-middle'>";
+                        echo "<button class='btn btn-primary' type='button' onclick=\"_Vote('".$vote[0]."', 1)\">";
+                        echo "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-patch-check' viewBox='0 0 16 16'>";
+                        echo "<path fill-rule='evenodd' d='M10.354 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708 0z'/>";
+                        echo "<path d='m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z'/>";
+                        echo "</svg>";
+                        echo "</button>";
+                        echo "</td>";
+
+                        echo "<td class='align-middle text-center'>".$vote[1]."</td>";
+
+                        echo "<td class='align-middle'>";
+                        echo "<div class='progress'>";
+                        if($vote[1] + $vote[2] == 0){
+                            echo "<div class='progress-bar' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'></div>";
+                        }
+                        else{
+                            $tmp = round($vote[1]  * 100 / ($vote[1] + $vote[2]));
+                            echo "<div class='progress-bar' role='progressbar' style='width: ".$tmp."%' aria-valuenow='".$tmp."' aria-valuemin='0' aria-valuemax='100'></div>";
+                            echo "<div class='progress-bar bg-danger' role='progressbar' style='width: ".(100 - $tmp)."%' aria-valuenow='".(100 - $tmp)."' aria-valuemin='0' aria-valuemax='100'></div>";
+                        }
+                        echo "</div>";
+                        echo "</td>";
+                        echo "<td class='align-middle text-center'>".$vote[2]."</td>";
+
+                        echo "<td class='align-middle'>";
+                        echo "<button class='btn btn-danger' type='button' onclick=\"_Vote('".$vote[0]."', 2)\">";
+                        echo "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-patch-check' viewBox='0 0 16 16'>";
+                        echo "<path fill-rule='evenodd' d='M10.354 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708 0z'/>";
+                        echo "<path d='m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z'/>";
+                        echo "</svg>";
+                        echo "</button>";
+                        echo "</td>";
+
+                        echo "</tr>";
+                        echo "</tbody></table></div>";
+
+                        // echo "<div class='mb-3' style='word-break:break-all'>".$forum[1]."</div>";
+                        echo "</div>";
+                        echo "<div class='modal-footer text-secondary'>".$vote[3]."</div>";
+                        echo "</div></div></div>";
+                    }
+                }
             ?>
         </div>
         <script>
