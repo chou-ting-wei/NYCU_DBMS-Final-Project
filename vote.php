@@ -33,8 +33,8 @@
         .w-10{
             width: 10%;
         }
-        .w-20{
-            width: 20%;
+        .w-30{
+            width: 30%;
         }
         .w-35{
             width: 35%;
@@ -165,9 +165,9 @@
                 echo "<table class='table table-borded'>";
                 echo "<thead><tr>";
                 echo "<th scope='col' class='w-35 align-middle'>Title</th>";
-                echo "<th scope='col' class='w-10 align-middle'>L</th>";
-                echo "<th scope='col' class='w-20 align-middle'>M</th>";
-                echo "<th scope='col' class='w-10 align-middle'>R</th>";
+                echo "<th scope='col' class='w-5 align-middle text-center'>L</th>";
+                echo "<th scope='col' class='w-30 align-middle text-center'></th>";
+                echo "<th scope='col' class='w-5 align-middle text-center'>R</th>";
                 echo "<th scope='col' class='w-20 align-middle'>Time</th>";
                 echo "<th scope='col' class='w-5 align-middle'></th>";
                 echo "</tr></thead>";
@@ -197,14 +197,26 @@
                     if($voteCnt > 0){
                         for($index = 0; $index < $voteCnt; $index ++){
                             $vote = $voteData[$index]->get_all();
-                            echo "<pre>";
-                            print_r($vote);
-                            echo "</pre>";
+                            // echo "<pre>";
+                            // print_r($vote);
+                            // echo "</pre>";
                             echo "<tr>";
-                            echo "<td class='align-middle'>".$vote[0]."</td>";
-                            echo "<td class='align-middle'>".$vote[1]."</td>";
-                            echo "<td class='align-middle'></td>";
-                            echo "<td class='align-middle'>".$vote[2]."</td>";
+                            echo "<td class='align-middle'><a href='#' data-bs-toggle='modal' data-bs-target='#voteModalIdx".$index."'>".$vote[0]."</a></td>";
+                            // echo "<td class='align-middle'>".$vote[0]."</td>";
+                            echo "<td class='align-middle text-center'>".$vote[1]."</td>";
+                            echo "<td class='align-middle'>";
+                            echo "<div class='progress'>";
+                            if($vote[1] + $vote[2] == 0){
+                                echo "<div class='progress-bar' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'></div>";
+                            }
+                            else{
+                                $tmp = round($vote[1] / ($vote[1] + $vote[2]));
+                                echo "<div class='progress-bar' role='progressbar' style='width: ".$tmp."%' aria-valuenow='".$tmp."' aria-valuemin='0' aria-valuemax='100'></div>";
+                                echo "<div class='progress-bar bg-danger' role='progressbar' style='width: ".(100 - $tmp)."%' aria-valuenow='".(100 - $tmp)."' aria-valuemin='0' aria-valuemax='100'></div>";
+                            }
+                            echo "</div>";
+                            echo "</td>";
+                            echo "<td class='align-middle text-center'>".$vote[2]."</td>";
                             echo "<td class='align-middle'>".$vote[3]."</td>";
                             echo "<td class='align-middle'>";
                             if(isset($_SESSION['username'])){
@@ -218,6 +230,20 @@
                                     echo "</button>";
                                 }
                             }
+                            echo "</td>";
+                            echo "</tr>";
+                            echo "<div class='modal fade' id='voteModalIdx".$index."' tabindex='-1' data-bs-backdrop='static' data-bs-keyboard='false' aria-labelledby='voteModalLabel' aria-hidden='true'>";
+                            echo "<div class='modal-dialog modal-lg'>";
+                            echo "<div class='modal-content'>";
+                            echo "<div class='modal-header'>";
+                            echo "<h5 class='modal-title' id='voteModalIdx".$index."Label'>".$vote[0]."</h5>";
+                            echo "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>";
+                            echo "</div>";
+                            echo "<div class='modal-body'>";
+                            // echo "<div class='mb-3' style='word-break:break-all'>".$forum[1]."</div>";
+                            echo "</div>";
+                            // echo "<div class='modal-footer text-secondary'>".$forum[2]."</div>";
+                            echo "</div></div></div>";
                         }
                     }
                     else{
