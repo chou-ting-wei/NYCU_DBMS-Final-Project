@@ -6,9 +6,6 @@
         $_SESSION["login_session"] = false;
         $_SESSION["username"] = NULL;
     }
-    if(!isset($_SESSION["forum_search"])){
-        $_SESSION["forum_search"] = NULL;
-    }
     include("sqlmanager.php");
 ?>
 <html>
@@ -107,9 +104,6 @@
                 window.location.reload();
             }
         </script>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="submitBtn" onclick="_addForum()">Submit</button>
-                    </div>
         <div class="container mt-4">
             <h3 class="fw-bolder">Forum</h3>
             <hr class="mt-3 mb-3"></hr>
@@ -159,7 +153,7 @@
                     window.location.reload();
                 }
                 else{
-                    alert('Delete forum failed! (ERR: FTitle undefined)');
+                    alert('Delete forum failed! (ERR: Title undefined)');
                 }
             }
         </script>
@@ -184,7 +178,8 @@
                         for($index = 0; $index < $forumCnt; $index ++){
                             $forum = $forumData[$index]->get_all();
                             echo "<tr>";
-                            echo "<td class='align-middle'>".$forum[0]."</td>";
+                            echo "<td class='align-middle'><a href='#' data-bs-toggle='modal' data-bs-target='#forumModalIdx".$index."'>".$forum[0]."</a></td>";
+                            // echo "<td class='align-middle'>".$forum[0]."</td>";
                             echo "<td class='align-middle'>".$forum[2]."</td>";
                             echo "<td class='align-middle'>".$forum[3]."</td>";
                             echo "<td class='align-middle'>";
@@ -201,11 +196,24 @@
                             }
                             echo "</td>";
                             echo "</tr>";
+                            echo "<div class='modal fade' id='forumModalIdx".$index."' tabindex='-1' data-bs-backdrop='static' data-bs-keyboard='false' aria-labelledby='forumModalLabel' aria-hidden='true'>";
+                            echo "<div class='modal-dialog modal-lg'>";
+                            echo "<div class='modal-content'>";
+                            echo "<div class='modal-header'>";
+                            echo "<h5 class='modal-title' id='forumModalIdx".$index."Label'>".$forum[0]."</h5>";
+                            echo "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>";
+                            echo "</div>";
+                            echo "<div class='modal-body'>";
+                            echo "<div class='mb-3' style='word-break:break-all'>".$forum[1]."</div>";
+                            echo "</div>";
+                            echo "<div class='modal-footer text-secondary'>".$forum[2]."</div>";
+                            echo "</div></div></div>";
                         }
                     }
                     else{
                         echo "<tr><td class='align-middle' colspan='4'><span class='text-danger mb-3'>No result found.</span></td></tr>";
                     }
+                    echo "</tbody></table></div></div>";
                 }
                 else{
                     $forumData = getForumList("");
@@ -220,7 +228,8 @@
                             // print_r($forum);
                             // echo "</pre>";
                             echo "<tr>";
-                            echo "<td class='align-middle'>".$forum[0]."</td>";
+                            echo "<td class='align-middle'><a href='#' data-bs-toggle='modal' data-bs-target='#forumModalIdx".$index."'>".$forum[0]."</a></td>";
+                            // echo "<td class='align-middle'>".$forum[0]."</td>";
                             echo "<td class='align-middle'>".$forum[2]."</td>";
                             echo "<td class='align-middle'>".$forum[3]."</td>";
                             echo "<td class='align-middle'>";
@@ -237,6 +246,18 @@
                             }
                             echo "</td>";
                             echo "</tr>";
+                            echo "<div class='modal fade' id='forumModalIdx".$index."' tabindex='-1' data-bs-backdrop='static' data-bs-keyboard='false' aria-labelledby='forumModalLabel' aria-hidden='true'>";
+                            echo "<div class='modal-dialog modal-lg'>";
+                            echo "<div class='modal-content'>";
+                            echo "<div class='modal-header'>";
+                            echo "<h5 class='modal-title' id='forumModalIdx".$index."Label'>".$forum[0]."</h5>";
+                            echo "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>";
+                            echo "</div>";
+                            echo "<div class='modal-body'>";
+                            echo "<div class='mb-3' style='word-break:break-all'>".$forum[1]."</div>";
+                            echo "</div>";
+                            echo "<div class='modal-footer text-secondary'>".$forum[2]."</div>";
+                            echo "</div></div></div>";
                         }
                     }
                     else{
@@ -265,9 +286,17 @@
                 var FText = document.getElementById('FText').value;
     
                 if(FTitle && FText){
-                    document.cookie = "addFTitle=" + FTitle;
-                    document.cookie = "addFText=" + FText;
-                    window.location.reload();
+                    if(FTitle.length > 20){
+                        alert('Add forum failed! (ERR: The length of Title is greater than 20.)');
+                    }
+                    else if(FText.length > 500){
+                        alert('Add forum failed! (ERR: The length of Content is greater than 500.)');
+                    }
+                    else{
+                        document.cookie = "addFTitle=" + FTitle; path="forum.php";
+                        document.cookie = "addFText=" + FText; path="forum.php";
+                        window.location.reload();
+                    }
                 }
                 else{
                     alert('Add forum failed! Please fill in all fields.');
@@ -275,7 +304,7 @@
             }
         </script>
         <div class="modal fade" id="forumModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="forumModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="forumModalLabel">New Forum</h5>
