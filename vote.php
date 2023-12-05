@@ -169,7 +169,7 @@
             }
             <?php
                 if(isset($_COOKIE["VTitle"]) && isset($_COOKIE["VSide"])){
-                    if(Vote($_COOKIE["VTitle"], $_COOKIE["VSide"])){
+                    if(Vote($_COOKIE["VTitle"], $_SESSION['username'],  $_COOKIE["VSide"])){
                         echo "document.cookie = 'VTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=vote.php;';";
                         echo "document.cookie = 'VSide=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=vote.php;';";
                         echo "alert('Vote successful!');";
@@ -377,7 +377,7 @@
         <script>
             <?php
                 if(isset($_COOKIE["addVTitle"])){
-                    if(addVote($_COOKIE["addVTitle"])){
+                    if(addVote($_COOKIE["addVTitle"], $_SESSION['username'])){
                         echo "document.cookie = 'addVTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=vote.php;';";
                         echo "alert('Add vote successful!');";
                         echo "window.location.reload();";
