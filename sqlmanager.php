@@ -220,34 +220,44 @@
         return $voteData;
     }
     
-    function addVote($VTitle){
+    function addVote($VTitle, $username){
         $connection = initDB();
         $time=date("Y/m/d h:i:s");
-        $query="INSERT INTO Vote Values('$VTitle', 0, 0, '$time')";
+        $query="INSERT INTO Vote Values('$VTitle', 0, 0, '$time','$username')";
         $b=mysqli_query($connection, $query);
         closeDB($connection);
         return $b;
     }
 
-    function Vote($VTitle, $side){
+    function Vote($VTitle, $username, $side){
         $connection = initDB();
-        $query="";
+        $query="SELECT * FROM Voted WHERE title='$VTitle' and username='$username'";
+        $result=mysqli_query($connection, $query);
+        if(mysqli_num_rows($result) > 0){
+            return false;
+        }
+
         if ($side==1){
             $query="UPDATE Vote SET vote_1=vote_1+1 WHERE title='$VTitle'";
         }
         else{
             $query="UPDATE Vote SET vote_2=vote_2+1 WHERE title='$VTitle'";
         }
+        $update="INSERT INTO Voted Values('$VTitle','$username')";
+        $a=mysqli_query($connection,$update);
         $b=mysqli_query($connection, $query);
+
         closeDB($connection);
-        return $b;
+        return ($b && $a);
     }
 
     function delVote($VTitle){
         $connection = initDB();
         $query="DELETE FROM Vote WHERE title='$VTitle'";    
         $b=mysqli_query($connection, $query);
+        $query="DELETE FROM Voted WHERE title='$VTitle";
+        $a=mysqli_query($connection, $query);
         closeDB($connection);
-        return $b;
+        return ($b && $a);
     }
 ?>
