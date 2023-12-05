@@ -15,7 +15,7 @@
         }
     
         function get_all(){
-            $row=array($this->VTitle, $this->V_1,$this->V_2,$this->post_time);
+            $row=array($this->VTitle, $this->V_1,$this->V_2,$this->post_time,$this->post_username);
             return $row;
         }
         

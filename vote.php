@@ -231,7 +231,7 @@
                             echo "</div>";
                             echo "</td>";
                             echo "<td class='align-middle text-center'>".$vote[2]."</td>";
-                            echo "<td class='align-middle'>".$vote[3]."</td>";
+                            echo "<td class='align-middle'>".$vote[4]."</td>";
                             echo "<td class='align-middle'>".$vote[3]."</td>";
                             echo "<td class='align-middle'>";
                             if(isset($_SESSION['username'])){
@@ -283,7 +283,7 @@
                             echo "</div>";
                             echo "</td>";
                             echo "<td class='align-middle text-center'>".$vote[2]."</td>";
-                            echo "<td class='align-middle'>".$vote[3]."</td>";
+                            echo "<td class='align-middle'>".$vote[4]."</td>";
                             echo "<td class='align-middle'>".$vote[3]."</td>";
                             echo "<td class='align-middle'>";
                             if(isset($_SESSION['username'])){
@@ -368,7 +368,7 @@
 
                         // echo "<div class='mb-3' style='word-break:break-all'>".$forum[1]."</div>";
                         echo "</div>";
-                        echo "<div class='modal-footer text-secondary'>".$vote[3]."</div>";
+                        echo "<div class='modal-footer text-secondary'>".$vote[4]."</div>";
                         echo "</div></div></div>";
                     }
                 }
