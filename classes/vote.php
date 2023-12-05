@@ -11,7 +11,7 @@
             $this->V_1=$row["vote_1"];
             $this->V_2=$row["vote_2"];
             $this->post_time=$row["post_time"];
-            $this->post_username=$row["username"];
+            $this->post_username=$row["post_username"];
         }
     
         function get_all(){
