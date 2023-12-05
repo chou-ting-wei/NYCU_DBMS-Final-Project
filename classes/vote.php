@@ -4,14 +4,14 @@
         private $V_1;
         private $V_2;
         private $post_time;
-        private $post_username
+        private $post_username;
 
         function set_Vote($row){
             $this->VTitle=$row["title"];
             $this->V_1=$row["vote_1"];
             $this->V_2=$row["vote_2"];
             $this->post_time=$row["post_time"];
-            $this->post_username=$row["post_username"];
+            $this->post_username=$row["username"];
         }
     
         function get_all(){

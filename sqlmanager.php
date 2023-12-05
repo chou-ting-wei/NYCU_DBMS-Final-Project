@@ -251,15 +251,11 @@
         return ($b && $a);
     }
 
-    function chkVote($username, $VTitle){
-
-    }
-
     function delVote($VTitle){
         $connection = initDB();
         $query="DELETE FROM Vote WHERE title='$VTitle'";    
         $b=mysqli_query($connection, $query);
-        $query="DELETE FROM Voted WHERE title='$VTitle";
+        $query="DELETE FROM Voted WHERE title='$VTitle'";
         $a=mysqli_query($connection, $query);
         closeDB($connection);
         return ($b && $a);
