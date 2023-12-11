@@ -210,7 +210,7 @@
 
     function addForum($FTitle, $FText, $username){
         $connection = initDB();
-        $time=date("Y/m/d h:i:s");
+        $time=date("Y/m/d H:i:s");
         $query="INSERT INTO Forum Values('$FTitle','$FText','$username','$time')";
         $b=mysqli_query($connection, $query);
         closeDB($connection);
@@ -247,7 +247,7 @@
     
     function addVote($VTitle, $username){
         $connection = initDB();
-        $time=date("Y/m/d h:i:s");
+        $time=date("Y/m/d H:i:s");
         $query="INSERT INTO Vote Values('$VTitle', 0, 0, '$time','$username')";
         $b=mysqli_query($connection, $query);
         closeDB($connection);
