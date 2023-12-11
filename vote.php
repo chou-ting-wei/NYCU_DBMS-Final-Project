@@ -178,7 +178,7 @@
                     else{
                         echo "document.cookie = 'VTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=vote.php;';";
                         echo "document.cookie = 'VSide=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=vote.php;';";
-                        echo "alert('Vote failed!');";
+                        echo "alert('Vote failed! (ERR: Mutiple vote)');";
                     }
                 }
             ?>
