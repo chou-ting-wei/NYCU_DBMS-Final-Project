@@ -155,12 +155,37 @@
         return $playerData;
     }
 
-    function getTeamList($TName){
+    // function getTeamList($TName){
 
-    }
+    // }
 
-    function getTeamInfo($TName){
-
+    function getTeamInfo($TName,$year,$mode,$playoff){
+        $connection = initDB();
+        $teamData = NULL;
+        if ($mode==1){
+            $query = "SELECT * FROM team_abbrev ta, team_total tt WHERE ta.tid=tt.tid and ta.abbrev='%$TName%' and ta.year='%$year%' and ta.playoff='%$playoff%'";
+            $result = mysqli_query($connection, $query);
+            $teamID = 0;
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){            
+                $team = new team();
+                $team->set_1($row);
+                $teamData[$teamID] = $team;
+                $teamID = $teamID + 1;
+            }
+        }
+        else{
+            $query = "SELECT * FROM team_abbrev ta, team_per_game tpg WHERE ta.tid=tpg.tid and ta.abbrev='%$TName%' and ta.year='%$year%' and ta.playoff='%$playoff%'";
+            $result = mysqli_query($connection, $query);
+            $teamID = 0;
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){            
+                $team = new team();
+                $team->set_2_3_4($row);
+                $teamData[$teamID] = $team;
+                $teamID = $teamID + 1;
+            }
+        }
+        closeDB($connection);
+        return $teamData;
     }
 
     function getForumList($FTitle){
