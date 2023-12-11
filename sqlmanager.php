@@ -185,7 +185,7 @@
             }
         }
         closeDB($connection);
-        return $forumData;
+        return $teamData;
     }
 
     function getForumList($FTitle){
