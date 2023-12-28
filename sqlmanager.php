@@ -155,10 +155,6 @@
         return $playerData;
     }
 
-    // function getTeamList($TName){
-
-    // }
-
     function getTeamInfo($TName,$year,$mode,$playoff){
         $connection = initDB();
         $teamData = NULL;
@@ -168,7 +164,7 @@
             $teamID = 0;
             while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){            
                 $team = new team();
-                $team->set_1($row);
+                $team->setTeam_1($row);
                 $teamData[$teamID] = $team;
                 $teamID = $teamID + 1;
             }
@@ -179,7 +175,7 @@
             $teamID = 0;
             while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){            
                 $team = new team();
-                $team->set_2_3_4($row);
+                $team->setTeam_2_3_4($row);
                 $teamData[$teamID] = $team;
                 $teamID = $teamID + 1;
             }

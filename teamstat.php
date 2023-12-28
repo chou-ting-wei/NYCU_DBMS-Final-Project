@@ -6,9 +6,6 @@
         $_SESSION["login_session"] = false;
         $_SESSION["username"] = NULL;
     }
-    if(!isset($_SESSION["team_info"])){
-        $_SESSION["team_info"] = NULL;
-    }
     include("sqlmanager.php")
 ?>
 <html>
@@ -29,6 +26,9 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+        }
+        .w-10{
+            width: 10%;
         }
     </style>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -81,62 +81,100 @@
         </div>
     </nav>
     <body>
+        <script>
+            function _searchTitle() {
+                var searchTTitle = document.getElementById('searchName').value;
+                var searchTYear = document.getElementById('searchYear').value;
+                var searchTPo = document.getElementById('searchPo').value;
+                if(searchTTitle){
+                    document.cookie = "searchTTitle=" + searchTTitle;
+                }
+                if(searchTYear){
+                    document.cookie = "searchTYear=" + searchTYear;
+                }
+                if(searchTPo){
+                    document.cookie = "searchTPo=" + searchTPo;
+                }
+                window.location.reload();
+            }
+            function loadInfo(searchTTitle, searchTYear, searchTPo) {
+                document.cookie = "searchTTitle=" + searchTTitle + ";path='teamstat_info.php';";
+                document.cookie = "searchTYear=" + searchTYear + ";path='teamstat_info.php';";
+                document.cookie = "searchTPo=" + searchTPo + ";path='teamstat_info.php';";
+                window.location = "teamstat_info.php?mode=1";
+            }
+        </script>
+
         <div class="container mt-4">
             <h3 class="fw-bolder">Team Stat</h3>
             <hr class="mt-3 mb-3"></hr>
+            <div class="col-md-6 me-auto">
+                <div class="input-group">
+                    <input type="text" class="form-control w-25" id="searchName" name="searchName" placeholder="Team Name" value="<?php echo isset($_COOKIE["searchTTitle"]) ? $_COOKIE["searchTTitle"] : '' ?>">
+                    <input type="text" class="form-control" id="searchYear" name="searchYear" placeholder="Year" value="<?php echo isset($_COOKIE["searchTYear"]) ? $_COOKIE["searchTYear"] : '' ?>">
+                    <select class="form-select" id="searchPo">
+                        <option <?php echo !isset($_COOKIE["searchTPo"]) ? 'selected' : '' ?> disabled value="">Playoff</option>
+                        <option <?php echo (isset($_COOKIE["searchTPo"]) && ($_COOKIE["searchTPo"] == 1)) ? 'selected' : '' ?> value="1">Yes</option>
+                        <option <?php echo (isset($_COOKIE["searchTPo"]) && ($_COOKIE["searchTPo"] == 0)) ? 'selected' : '' ?> value="0">No</option>
+                        <option <?php echo (isset($_COOKIE["searchTPo"]) && ($_COOKIE["searchTPo"] == 2)) ? 'selected' : '' ?> value="2">Both</option>
+                    </select>
+                    <button class="btn btn-secondary" type="button" id="searchBtn" onclick="_searchTitle()">
+                    &nbsp;
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                    </svg>
+                    &nbsp;
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-4">
             <?php
-                $voteData = getVoteList("");
-                $voteCnt = 0;
-                if($voteData != NULL){
-                    $voteCnt = count($voteData);
+                echo "<div class='table-responsive'>";
+                echo "<table class='table table-borded'>";
+                echo "<thead><tr>";
+                echo "<th scope='col' class='w-50 align-middle'>Team Name</th>";
+                echo "<th scope='col' class='w-25 align-middle text-center'>Year</th>";
+                echo "<th scope='col' class='w-25 align-middle'>Playoff</th>";
+                echo "</tr></thead>";
+                echo "<tbody>";
+                $TName = (isset($_COOKIE["searchTTitle"]) ? $_COOKIE["searchTTitle"] : '');
+                $year = (isset($_COOKIE["searchTYear"]) ? $_COOKIE["searchTYear"] : '');
+                if(isset($_COOKIE["searchTPo"])){
+                    if($_COOKIE["searchTPo"] == 1) $playoff = "TRUE";
+                    else if($_COOKIE["searchTPo"] == 0) $playoff = "FALSE";
+                    else $playoff = "";
                 }
-                if($voteCnt > 0){
-                    for($index = 0; $index < $voteCnt; $index ++){
-                        $vote = $voteData[$index]->get_all();
+                else{
+                    $playoff = "";
+                }
+                echo "TName: ".$TName." year: ".$year." playoff: ".$playoff;
+                $teamData = getTeamInfo($TName, $year, 1, $playoff);
+                $teamCnt = 0;
+                if($teamData != NULL){
+                    $teamCnt = count($teamData);
+                }
+                if($teamCnt > 0){
+                    for($index = 0; $index < $userCnt; $index ++){
+                        $team = $voteData[$index]->getTeam_1();
                         // echo "<pre>";
-                        // print_r($vote);
+                        // print_r($user);
                         // echo "</pre>";
                         echo "<tr>";
-                        echo "<td class='align-middle'><a href='#' data-bs-toggle='modal' data-bs-target='#voteModalIdx".$index."'>".$vote[0]."</a></td>";
-                        // echo "<td class='align-middle'>".$vote[0]."</td>";
-                        echo "<td class='align-middle text-center'>".$vote[1]."</td>";
-                        echo "<td class='align-middle'>";
-                        echo "<div class='progress'>";
-                        if($vote[1] + $vote[2] == 0){
-                            echo "<div class='progress-bar' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'></div>";
-                        }
-                        else{
-                            $tmp = round($vote[1] * 100 / ($vote[1] + $vote[2]));
-                            echo "<div class='progress-bar' role='progressbar' style='width: ".$tmp."%' aria-valuenow='".$tmp."' aria-valuemin='0' aria-valuemax='100'></div>";
-                            echo "<div class='progress-bar bg-danger' role='progressbar' style='width: ".(100 - $tmp)."%' aria-valuenow='".(100 - $tmp)."' aria-valuemin='0' aria-valuemax='100'></div>";
-                        }
-                        echo "</div>";
-                        echo "</td>";
-                        echo "<td class='align-middle text-center'>".$vote[2]."</td>";
-                        echo "<td class='align-middle'>".$vote[4]."</td>";
-                        echo "<td class='align-middle'>".$vote[3]."</td>";
-                        echo "<td class='align-middle'>";
-                        if(isset($_SESSION['username'])){
-                            $username = $_SESSION['username'];
-                            if($username == "admin" || $username = $vote[4]){
-                                echo "<button class='btn btn-danger' type='button' onclick=\"_delVote('".$vote[0]."')\">";
-                                echo "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash' viewBox='0 0 16 16'>";
-                                echo "<path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z'/>";
-                                echo "<path d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z'/>";
-                                echo "</svg>";
-                                echo "</button>";
-                            }
-                        }
-                        echo "</td>";
+                        echo "<td class='align-middle'><a href='#' onclick='loadInfo(".$team[2].",".$team[0].",".$team[8].")'>".$team[2]."</a></td>";
+                        echo "<td class='align-middle'>".$team[0]."</td>";
+                        echo "<td class='align-middle'>".$team[8]."</td>";
                         echo "</tr>";
                     }
                 }
                 else{
-                    echo "<tr><td class='align-middle' colspan='7'><span class='text-danger mb-3'>No data found.</span></td></tr>";
+                    echo "<tr><td class='align-middle' colspan='3'><span class='text-danger mb-3'>No data found.</span></td></tr>";
                 }
                 echo "</tbody></table></div></div>";
             ?>
         </div>
+       
 
         <!-- Bootstrap JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
