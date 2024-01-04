@@ -110,6 +110,23 @@
         return $b;
     }
 
+    function editPassword($username, $password){
+        $ret = false;
+        $connection = initDB();
+        $query = "SELECT * FROM User WHERE username='$username'";
+        $result = mysqli_query($connection, $query);
+        if(mysqli_num_rows($result)==1){
+            $query2="UPDATE User SET User.password='$password' WHERE username='$username'";
+            $result2 = mysqli_query($connection, $query2);
+            closeDB($connection);
+            return $result2;
+        }
+        else{
+            closeDB($connection);
+            return $ret;
+        }
+    }
+
     function getPlayerList($PTitle){
 
     }
