@@ -159,7 +159,7 @@
         $connection = initDB();
         $teamData = NULL;
         if ($mode==1){
-            $query = "SELECT * FROM team_abbrev ta, team_total tt WHERE ta.tid=tt.tid and ta.abbrev='%$TName%' and ta.year='%$year%' and ta.playoff='%$playoff%'";
+            $query = "SELECT * FROM team_abbrev ta, team_total tt WHERE ta.tid=tt.tid and ta.abbrev LIKE '%$TName%' and ta.year LIKE '%$year%' and ta.playoff LIKE '%$playoff%'";
             $result = mysqli_query($connection, $query);
             $teamID = 0;
             while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){            
@@ -170,7 +170,7 @@
             }
         }
         else{
-            $query = "SELECT * FROM team_abbrev ta, team_per_game tpg WHERE ta.tid=tpg.tid and ta.abbrev='%$TName%' and ta.year='%$year%' and ta.playoff='%$playoff%'";
+            $query = "SELECT * FROM team_abbrev ta, team_per_game tpg WHERE ta.tid=tpg.tid and ta.abbrev LIKE '%$TName%' and ta.year LIKE '%$year%' and ta.playoff LIKE '%$playoff%'";
             $result = mysqli_query($connection, $query);
             $teamID = 0;
             while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){            
