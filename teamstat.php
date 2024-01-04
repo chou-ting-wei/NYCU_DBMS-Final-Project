@@ -116,7 +116,7 @@
             <hr class="mt-3 mb-3"></hr>
             <div class="col-md-6 me-auto">
                 <div class="input-group">
-                    <input type="text" class="form-control w-25" id="searchName" name="searchName" placeholder="Team Abbreviation" value="<?php echo isset($_COOKIE["searchTTitle"]) ? $_COOKIE["searchTTitle"] : '' ?>">
+                    <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control w-25" id="searchName" name="searchName" placeholder="Team Abbreviation" value="<?php echo isset($_COOKIE["searchTTitle"]) ? $_COOKIE["searchTTitle"] : '' ?>">
                     <input type="text" class="form-control" id="searchYear" name="searchYear" placeholder="Year" value="<?php echo isset($_COOKIE["searchTYear"]) ? $_COOKIE["searchTYear"] : '' ?>">
                     <select class="form-select" id="searchPo">
                         <option <?php echo !isset($_COOKIE["searchTPo"]) ? 'selected' : '' ?> disabled value="">Playoff</option>
@@ -177,7 +177,7 @@
                     }
                 }
                 else{
-                    echo "<tr><td class='align-middle' colspan='3'><span class='text-danger mb-3'>No data found.</span></td></tr>";
+                    echo "<tr><td class='align-middle' colspan='4'><span class='text-danger mb-3'>No data found.</span></td></tr>";
                 }
                 echo "</tbody></table></div></div>";
             ?>
