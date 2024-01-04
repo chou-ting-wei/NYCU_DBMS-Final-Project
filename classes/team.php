@@ -148,6 +148,7 @@
             $row[10]=$this->tov;
             $row[11]=$this->pf;
             $row[12]=$this->pts;
+            return $row;
         }
     }
 ?>

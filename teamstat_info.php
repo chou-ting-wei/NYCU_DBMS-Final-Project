@@ -142,14 +142,41 @@
                         else if($mode == 2){
                             //["year","league","team","abbrev","field_goal_percent","3_point_percent","2_point_percent","free_throw_percent"]
                             $team = $teamData[0]->getTeam_2();
+                            $categ = array("Team Name", "Team Abbreviation", "Year", "League", "Free Throw Percentage", "Field Goal Percentage", "2 Point Percentage", "3 Point Percentage");
+                            $categCnt = count($categ);
+                            $ordteam = array($team[2], $team[3], $team[0], $team[1], $team[7], $team[4], $team[6], $team[5]);
+                            for($index = 0; $index < $categCnt; $index ++){
+                                echo "<tr>";
+                                echo "<td class='align-middle'>".$categ[$index]."</td>";
+                                echo "<td class='align-middle'>".$ordteam[$index]."</td>";
+                                echo "</tr>";
+                            }
                         }
                         else if($mode == 3){
                             //["year","league","team","abbrev","field_goal","field_goal_attempt","field_goal_percent","3_point","3_point_attempt","3_point_percent","2_point","2_point_attempt","2_point_percent","free_throw","free_throw_attempt","free_throw_percent"]
                             $team = $teamData[0]->getTeam_3();
+                            $categ = array("Team Name", "Team Abbreviation", "Year", "League", "Free Throw", "Free Throw Attempt", "Free Throw Percentage", "Field Goal", "Field Goal Attempt", "Field Goal Percentage", "2 Point", "2 Point Attempt", "2 Point Percentage", "3 Point", "3 Point Attempt", "3 Point Percentage");
+                            $categCnt = count($categ);
+                            $ordteam = array($team[2], $team[3], $team[0], $team[1], $team[13], $team[14], $team[15], $team[4], $team[5], $team[6], $team[10], $team[11], $team[12], $team[7], $team[8], $team[9]);
+                            for($index = 0; $index < $categCnt; $index ++){
+                                echo "<tr>";
+                                echo "<td class='align-middle'>".$categ[$index]."</td>";
+                                echo "<td class='align-middle'>".$ordteam[$index]."</td>";
+                                echo "</tr>";
+                            }
                         }
                         else{
                             //["year","league","team","abbrev","offensive_rebound","defensive_rebound","total_rebound","assist","steal","block","turnover","personal_foul","points"]
                             $team = $teamData[0]->getTeam_4();
+                            $categ = array("Team Name", "Team Abbreviation", "Year", "League", "Offensive Rebound", "Defensive Rebound", "Total Rebound", "Assist", "Steal", "Block", "Turnover", "Person Foul", "Points");
+                            $categCnt = count($categ);
+                            $ordteam = array($team[2], $team[3], $team[0], $team[1], $team[4], $team[5], $team[6], $team[7], $team[8], $team[9], $team[10], $team[11], $team[12]);
+                            for($index = 0; $index < $categCnt; $index ++){
+                                echo "<tr>";
+                                echo "<td class='align-middle'>".$categ[$index]."</td>";
+                                echo "<td class='align-middle'>".$ordteam[$index]."</td>";
+                                echo "</tr>";
+                            }
                         }
                     }
                     else{
