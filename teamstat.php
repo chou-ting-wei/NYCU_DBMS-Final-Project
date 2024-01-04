@@ -27,9 +27,6 @@
             -ms-user-select: none;
             user-select: none;
         }
-        .w-10{
-            width: 10%;
-        }
     </style>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -107,9 +104,9 @@
                 window.location.reload();
             }
             function loadInfo(searchTTitle, searchTYear, searchTPo) {
-                document.cookie = "searchTTitle=" + searchTTitle + ";path='teamstat_info.php';";
-                document.cookie = "searchTYear=" + searchTYear + ";path='teamstat_info.php';";
-                document.cookie = "searchTPo=" + searchTPo + ";path='teamstat_info.php';";
+                document.cookie = "searchTTitleInfo=" + searchTTitle;
+                document.cookie = "searchTYearInfo=" + searchTYear;
+                document.cookie = "searchTPoInfo=" + searchTPo;
                 window.location = "teamstat_info.php?mode=1";
             }
         </script>
@@ -170,7 +167,7 @@
                         // print_r($user);
                         // echo "</pre>";
                         echo "<tr>";
-                        echo "<td class='align-middle'><a href='#' onclick='loadInfo(".$team[2].",".$team[0].",".$team[8].")'>".$team[2]."</a></td>";
+                        echo "<td class='align-middle'><a href='#' onclick=\"loadInfo('".$team[3]."','".$team[0]."','".$team[8]."')\">".$team[2]."</a></td>";
                         echo "<td class='align-middle'>".$team[0]."</td>";
                         echo "<td class='align-middle'>".$team[8]."</td>";
                         echo "</tr>";

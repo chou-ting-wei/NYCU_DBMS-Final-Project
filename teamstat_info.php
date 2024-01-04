@@ -27,6 +27,12 @@
             -ms-user-select: none;
             user-select: none;
         }
+        .w-40{
+            width: 40%;
+        }
+        .w-60{
+            width: 60%;
+        }
     </style>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -43,7 +49,7 @@
                         <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Menu</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="playerstat.php">Player Stat</a></li>
-                            <li><a class="dropdown-item" href="#">Team Stat</a></li>
+                            <li><a class="dropdown-item" href="teamstat.php">Team Stat</a></li>
                             <li><a class="dropdown-item" href="forum.php">Forum</a></li>
                             <li><a class="dropdown-item" href="vote.php">Vote</a></li>
                         </ul>   
@@ -102,83 +108,52 @@
                 echo "<div class='table-responsive'>";
                 echo "<table class='table table-borded'>";
                 echo "<thead><tr>";
-                $colcnt = 0;
-                if($mode == 1){
-
-                }
-                else if($mode == 2){
-
-                }
-                else if($mode == 3){
-
-                }
-                else{
-
-                }
+                $colcnt = 2;
+                echo "<th scope='col' class='w-40 align-middle'>Category</th>";
+                echo "<th scope='col' class='w-60 align-middle'>Data</th>";
                 echo "</tr></thead>";
                 echo "<tbody>";
-                if($mode == '0'){
-                    echo "<tr><td class='align-middle' colspan='".$colcnt."'><span class='text-danger mb-3'>No data found.</span></td></tr>";
+                if($mode != 1 && $mode != 2 && $mode != 3 && $mode != 4){
+                    echo "<tr><td class='align-middle' colspan='".$colcnt."'><span class='text-danger mb-3'>Error: Undefined mode.</span></td></tr>";
                 }
                 else{
-                    $TName = (isset($_COOKIE["searchTTitle"]) ? $_COOKIE["searchTTitle"] : '');
-                    $year = (isset($_COOKIE["searchTYear"]) ? $_COOKIE["searchTYear"] : '');
-                    $playoff = (isset($_COOKIE["searchTPo"]) && $_COOKIE["searchTPo"] == 1) ? 'TRUE' : 'FALSE';
+                    $TName = (isset($_COOKIE["searchTTitleInfo"]) ? $_COOKIE["searchTTitleInfo"] : '');
+                    $year = (isset($_COOKIE["searchTYearInfo"]) ? $_COOKIE["searchTYearInfo"] : '');
+                    $playoff = (isset($_COOKIE["searchTPoInfo"]) && $_COOKIE["searchTPoInfo"] == "TRUE") ? 'TRUE' : 'FALSE';
                     $teamData = getTeamInfo($TName, $year, $mode, $playoff);
                     $teamCnt = 0;
                     if($teamData != NULL){
                         $teamCnt = count($teamData);
                     }
                     if($teamCnt > 0){
-                        $team = $teamData[0]->getTeam_1();
-                        echo "<tr>";
-                        echo "<td class='align-middle'><a href='#' data-bs-toggle='modal' data-bs-target='#voteModalIdx".$index."'>".$vote[0]."</a></td>";
-                        // echo "<td class='align-middle'>".$vote[0]."</td>";
-                        echo "<td class='align-middle text-center'>".$vote[1]."</td>";
-                        echo "<td class='align-middle'>";
-                        for($index = 0; $index < $voteCnt; $index ++){
-                            
-                            $vote = $voteData[$index]->get_all();
-                            // echo "<pre>";
-                            // print_r($vote);
-                            // echo "</pre>";
-                            echo "<tr>";
-                            echo "<td class='align-middle'><a href='#' data-bs-toggle='modal' data-bs-target='#voteModalIdx".$index."'>".$vote[0]."</a></td>";
-                            // echo "<td class='align-middle'>".$vote[0]."</td>";
-                            echo "<td class='align-middle text-center'>".$vote[1]."</td>";
-                            echo "<td class='align-middle'>";
-                            echo "<div class='progress'>";
-                            if($vote[1] + $vote[2] == 0){
-                                echo "<div class='progress-bar' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'></div>";
+                        if($mode == 1){
+                            //["year","league","team","abbrev","arena","avg_age","win","lose","playoff","margin_of_victory","offensive_rating","defensive_rating","pace"]
+                            $team = $teamData[0]->getTeam_1();
+                            $categ = array("Team Name", "Team Abbreviation", "Year", "League", "Arena", "Average Age", "Win", "Lose", "Playoff", "Margin of Victory", "Offensive Rating", "Defensive Rating", "Pace");
+                            $categCnt = count($categ);
+                            $ordteam = array($team[2], $team[3], $team[0], $team[1], $team[4], $team[5], $team[6], $team[7], $team[8], $team[9], $team[10], $team[11], $team[12]);
+                            for($index = 0; $index < $categCnt; $index ++){
+                                echo "<tr>";
+                                echo "<td class='align-middle'>".$categ[$index]."</td>";
+                                echo "<td class='align-middle'>".$ordteam[$index]."</td>";
+                                echo "</tr>";
                             }
-                            else{
-                                $tmp = round($vote[1] * 100 / ($vote[1] + $vote[2]));
-                                echo "<div class='progress-bar' role='progressbar' style='width: ".$tmp."%' aria-valuenow='".$tmp."' aria-valuemin='0' aria-valuemax='100'></div>";
-                                echo "<div class='progress-bar bg-danger' role='progressbar' style='width: ".(100 - $tmp)."%' aria-valuenow='".(100 - $tmp)."' aria-valuemin='0' aria-valuemax='100'></div>";
-                            }
-                            echo "</div>";
-                            echo "</td>";
-                            echo "<td class='align-middle text-center'>".$vote[2]."</td>";
-                            echo "<td class='align-middle'>".$vote[4]."</td>";
-                            echo "<td class='align-middle'>".$vote[3]."</td>";
-                            echo "<td class='align-middle'>";
-                            if(isset($_SESSION['username'])){
-                                $username = $_SESSION['username'];
-                                if($username == "admin" || $username = $vote[4]){
-                                    echo "<button class='btn btn-danger' type='button' onclick=\"_delVote('".$vote[0]."')\">";
-                                    echo "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash' viewBox='0 0 16 16'>";
-                                    echo "<path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z'/>";
-                                    echo "<path d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z'/>";
-                                    echo "</svg>";
-                                    echo "</button>";
-                                }
-                            }
-                            echo "</td>";
-                            echo "</tr>";
+                        }
+                        else if($mode == 2){
+                            //["year","league","team","abbrev","field_goal_percent","3_point_percent","2_point_percent","free_throw_percent"]
+                            $team = $teamData[0]->getTeam_2();
+                        }
+                        else if($mode == 3){
+                            //["year","league","team","abbrev","field_goal","field_goal_attempt","field_goal_percent","3_point","3_point_attempt","3_point_percent","2_point","2_point_attempt","2_point_percent","free_throw","free_throw_attempt","free_throw_percent"]
+                            $team = $teamData[0]->getTeam_3();
+                        }
+                        else{
+                            //["year","league","team","abbrev","offensive_rebound","defensive_rebound","total_rebound","assist","steal","block","turnover","personal_foul","points"]
+                            $team = $teamData[0]->getTeam_4();
                         }
                     }
                     else{
-                        echo "<tr><td class='align-middle' colspan='"+ $colcnt +"'><span class='text-danger mb-3'>No data found.</span></td></tr>";
+                        echo "<tr><td class='align-middle' colspan='".$colcnt."'><span class='text-danger mb-3'>No data found.</span></td></tr>";
                     }
                     echo "</tbody></table></div></div>";
                 }
