@@ -118,7 +118,7 @@
                 echo "</tr></thead>";
                 echo "<tbody>";
                 if($mode == '0'){
-                    echo "<tr><td class='align-middle' colspan='"+ $colcnt +"'><span class='text-danger mb-3'>No data found.</span></td></tr>";
+                    echo "<tr><td class='align-middle' colspan='".$colcnt."'><span class='text-danger mb-3'>No data found.</span></td></tr>";
                 }
                 else{
                     $TName = (isset($_COOKIE["searchTTitle"]) ? $_COOKIE["searchTTitle"] : '');
