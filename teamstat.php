@@ -116,7 +116,7 @@
             <hr class="mt-3 mb-3"></hr>
             <div class="col-md-6 me-auto">
                 <div class="input-group">
-                    <input type="text" class="form-control w-25" id="searchName" name="searchName" placeholder="Team Name" value="<?php echo isset($_COOKIE["searchTTitle"]) ? $_COOKIE["searchTTitle"] : '' ?>">
+                    <input type="text" class="form-control w-25" id="searchName" name="searchName" placeholder="Team Abbreviation" value="<?php echo isset($_COOKIE["searchTTitle"]) ? $_COOKIE["searchTTitle"] : '' ?>">
                     <input type="text" class="form-control" id="searchYear" name="searchYear" placeholder="Year" value="<?php echo isset($_COOKIE["searchTYear"]) ? $_COOKIE["searchTYear"] : '' ?>">
                     <select class="form-select" id="searchPo">
                         <option <?php echo !isset($_COOKIE["searchTPo"]) ? 'selected' : '' ?> disabled value="">Playoff</option>
@@ -141,7 +141,8 @@
                 echo "<div class='table-responsive'>";
                 echo "<table class='table table-borded table-hover'>";
                 echo "<thead><tr>";
-                echo "<th scope='col' class='w-50 align-middle'>Team Name</th>";
+                echo "<th scope='col' class='w-25 align-middle'>Team Name</th>";
+                echo "<th scope='col' class='w-25 align-middle'>Team Abbreviation</th>";
                 echo "<th scope='col' class='w-25 align-middle'>Year</th>";
                 echo "<th scope='col' class='w-25 align-middle'>Playoff</th>";
                 echo "</tr></thead>";
@@ -169,6 +170,7 @@
                         // echo "</pre>";
                         echo "<tr>";
                         echo "<td class='align-middle'><a href='#' onclick=\"loadInfo('".$team[3]."','".$team[0]."','".$team[8]."')\">".$team[2]."</a></td>";
+                        echo "<td class='align-middle'>".$team[3]."</td>";
                         echo "<td class='align-middle'>".$team[0]."</td>";
                         echo "<td class='align-middle'>".$team[8]."</td>";
                         echo "</tr>";
