@@ -64,7 +64,7 @@
                                 }
                                 else{
                                     echo "<li class='nav-item'>";
-                                    echo "<a class='nav-link active'>".$username."</a>";
+                                    echo "<a class='nav-link active' href='editpw.php'>".$username."</a>";
                                     echo "</li>";
                                 }
                             }
@@ -73,7 +73,6 @@
                             echo "</li>";
                         }
                     ?>
-                </ul>
             </div>
         </div>
     </nav>
@@ -135,7 +134,7 @@
             </div>
         </div>
 
-        <div class="container mt-4">
+        <div class="container mt-3">
             <?php
                 $t_page = (isset($_GET['t_page']) ? $_GET['t_page'] : 1);
                 echo "<div class='table-responsive'>";

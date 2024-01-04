@@ -4,15 +4,15 @@
     session_start();
     include("sqlmanager.php");
 
-    if($_SESSION["login_session"]){
-        echo "<script>location.href='index.php'</script>";
+    if(!$_SESSION["login_session"]){
+        echo "<script>location.href='login.php'</script>";
     }
 ?>
 <html>
     <head>
         <meta charset="UTF=8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>NBA Stat - Register</title>
+        <title>NBA Stat - Edit Password</title>
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     </head>
@@ -48,46 +48,70 @@
                             <li><a class="dropdown-item" href="vote.php">Vote</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="login.php">Login</a>
-                    </li>
+                    <?php
+                        if(!$_SESSION["login_session"]){
+                            echo "<li class='nav-item'>";
+                            echo "<a class='nav-link active' href='login.php'>Login</a>";
+                            echo "</li>";
+                        }
+                        else{
+                            if(isset($_SESSION['username'])){
+                                $username = $_SESSION['username'];
+                                if($username == "admin"){
+                                    echo "<li class='nav-item'>";
+                                    echo "<a class='nav-link active' href='admin.php'>".$username."</a>";
+                                    echo "</li>";
+                                }
+                                else{
+                                    echo "<li class='nav-item'>";
+                                    echo "<a class='nav-link active' href='#'>".$username."</a>";
+                                    echo "</li>";
+                                }
+                            }
+                            echo "<li class='nav-item'>";
+                            echo "<a class='nav-link active' href='logout.php'>Logout</a>";
+                            echo "</li>";
+                        }
+                    ?>
                 </ul>
             </div>
         </div>
     </nav>
     <body>
         <?php
-            $username = ""; $password = "";
-            if(isset($_POST["username"]))
-                $username = $_POST["username"];  
-            if(isset($_POST["password"]))
-                $password = $_POST["password"];
-            if($username && $password){
-                // if(($username == "admin" && $password == "admintest") || ($username == "test" && $password == "testtest")){
-                if(addRegister($username, $password)){
-                    echo "<script> alert('Register successful!'); location.href='login.php'</script>";
+            $oPassword = ""; $nPassword = "";
+            if(isset($_POST["oldPassword"]))
+                $oPassword = $_POST["oldPassword"];  
+            if(isset($_POST["newPassword"]))
+                $nPassword = $_POST["newPassword"];
+            if($oPassword && $nPassword){
+                if(chkLogin($_SESSION["username"], $oPassword) && editPassword($_SESSION["username"], $nPassword)){
+                    echo "<script> alert('Edit password successful!'); </script>";
+                    $_SESSION["login_session"] = false;
+                    $_SESSION["username"] = NULL;
+                    echo "<script> location.href='login.php'</script>";
                 }
                 else{
-                    echo "<script> alert('Register failed!');</script>";
+                    echo "<script> alert('Edit password failed!');</script>";
                 }
             }
         ?>
         <div class="container mt-4">
-            <h3 class="fw-bolder">Register</h3>
+            <h3 class="fw-bolder">Edit Password</h3>
             <hr class="mt-3 mb-3"></hr>
-            <form id="loginForm" class="need-validation" novalidate action=register.php method="post">
+            <form id="loginForm" class="need-validation" novalidate action=editpw.php method="post">
                 <div class="mt-3 mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username"placeholder="username" autocomplete="off" minlength="4" maxlength="20" required>
+                    <label for="oldPassword" class="form-label">Old Password</label>
+                    <input type="password" class="form-control" id="oldPassword" name="oldPassword"placeholder="old password" autocomplete="off" minlength="8" maxlength="30" required>
                     <div class="invalid-feedback">
-                        Username must contain 4 to 20 characters.
+                        Old Password must contain 8 to 30 characters.
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="password" autocomplete="off" minlength="8" maxlength="30" required>
+                    <label for="newpassword" class="form-label">New Password</label>
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="new password" autocomplete="off" minlength="8" maxlength="30" required>
                     <div class="invalid-feedback">
-                        Password must contain 8 to 30 characters.
+                        New Password must contain 8 to 30 characters.
                     </div>
                 </div>
                 <button type="submit" class="btn btn-secondary">Submit</button>
