@@ -106,7 +106,7 @@
             <?php
                 $mode = (isset($_GET['mode']) ? $_GET['mode'] : '0');
                 echo "<div class='table-responsive'>";
-                echo "<table class='table table-borded'>";
+                echo "<table class='table table-borded table-hover'>";
                 echo "<thead><tr>";
                 $colcnt = 2;
                 echo "<th scope='col' class='w-40 align-middle'>Category</th>";

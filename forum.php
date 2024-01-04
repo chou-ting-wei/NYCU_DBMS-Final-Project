@@ -160,7 +160,7 @@
         <div class="container mt-3">
             <?php
                 echo "<div class='table-responsive'>";
-                echo "<table class='table table-borded'>";
+                echo "<table class='table table-borded table-hover'>";
                 echo "<thead><tr>";
                 echo "<th scope='col' class='w-55 align-middle'>Title</th>";
                 echo "<th scope='col' class='w-20 align-middle'>Author</th>";

@@ -101,7 +101,7 @@
                 else{
                     document.cookie = "searchTPo=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
                 }
-                window.location.reload();
+                window.location = "teamstat.php";
             }
             function loadInfo(searchTTitle, searchTYear, searchTPo) {
                 document.cookie = "searchTTitleInfo=" + searchTTitle;
@@ -137,8 +137,9 @@
 
         <div class="container mt-4">
             <?php
+                $t_page = (isset($_GET['t_page']) ? $_GET['t_page'] : 1);
                 echo "<div class='table-responsive'>";
-                echo "<table class='table table-borded'>";
+                echo "<table class='table table-borded table-hover'>";
                 echo "<thead><tr>";
                 echo "<th scope='col' class='w-50 align-middle'>Team Name</th>";
                 echo "<th scope='col' class='w-25 align-middle'>Year</th>";
@@ -161,7 +162,7 @@
                     $teamCnt = count($teamData);
                 }
                 if($teamCnt > 0){
-                    for($index = 0; $index < $teamCnt; $index ++){
+                    for($index = 10 * ($t_page - 1); $index < min($teamCnt, 10 * $t_page); $index ++){
                         $team = $teamData[$index]->getTeam_1();
                         // echo "<pre>";
                         // print_r($user);
@@ -179,7 +180,45 @@
                 echo "</tbody></table></div></div>";
             ?>
         </div>
-       
+
+        <div class="container mt-4">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-end">
+                    <?php
+                        $all_t_page = ceil($teamCnt / 10);
+                        if($all_t_page != 0){
+                            if($t_page > 1){
+                                echo "<li class='page-item'>";
+                                echo "<a class='page-link text-dark' href='teamstat.php?t_page=".($t_page - 1)."' aria-label='Previous'>";
+                                echo "<span aria-hidden='true'>&laquo;</span>";
+                                echo "</a></li>";
+                                echo "<li class='page-item'><a class='page-link text-dark' href='teamstat.php?t_page=1'>1</a></li>";
+                            }
+                            if($t_page - 2 > 1){
+                                echo "<li class='page-item disabled'><a class='page-link text-dark'>...</a></li>";
+                            }
+                            if($t_page - 1 > 1){
+                                echo "<li class='page-item'><a class='page-link text-dark' href='teamstat.php?t_page=".($t_page - 1)."'>".($t_page - 1)."</a></li>";
+                            }
+                            echo "<li class='page-item'><a class='page-link text-dark active' href='teamstat.php?t_page=".($t_page)."'>".($t_page)."</a></li>";
+                            if($t_page + 1 < $all_t_page){
+                                echo "<li class='page-item'><a class='page-link text-dark' href='teamstat.php?t_page=".($t_page + 1)."'>".($t_page + 1)."</a></li>";
+                            }
+                            if($t_page + 2 < $all_t_page){
+                                echo "<li class='page-item disabled'><a class='page-link text-dark'>...</a></li>";
+                            }
+                            if($t_page < $all_t_page){
+                                echo "<li class='page-item'><a class='page-link text-dark' href='teamstat.php?t_page=".$all_t_page."'>".$all_t_page."</a></li>";
+                                echo "<li class='page-item'>";
+                                echo "<a class='page-link text-dark' href='teamstat.php?t_page=".($t_page + 1)."' aria-label='Next'>";
+                                echo "<span aria-hidden='true'>&raquo;</span>";
+                                echo "</a></li>";
+                            }
+                        }
+                    ?>
+                </ul>
+            </nav>
+        </div>
 
         <!-- Bootstrap JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

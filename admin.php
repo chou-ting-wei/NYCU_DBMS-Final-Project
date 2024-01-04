@@ -92,7 +92,7 @@
             <hr class="mt-3 mb-3"></hr>
 
             <div class="table-responsive">
-                <table class="table table-borded">
+                <table class="table table-borded table-hover">
                     <thead>
                         <tr>
                             <th scope="col" class="w-40 align-middle">Username</th>
