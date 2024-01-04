@@ -123,9 +123,9 @@
                     <input type="text" class="form-control" id="searchYear" name="searchYear" placeholder="Year" value="<?php echo isset($_COOKIE["searchTYear"]) ? $_COOKIE["searchTYear"] : '' ?>">
                     <select class="form-select" id="searchPo">
                         <option <?php echo !isset($_COOKIE["searchTPo"]) ? 'selected' : '' ?> disabled value="">Playoff</option>
-                        <option <?php echo (isset($_COOKIE["searchTPo"]) && ($_COOKIE["searchTPo"] == 1)) ? 'selected' : '' ?> value="1">Yes</option>
-                        <option <?php echo (isset($_COOKIE["searchTPo"]) && ($_COOKIE["searchTPo"] == 0)) ? 'selected' : '' ?> value="0">No</option>
-                        <option <?php echo (isset($_COOKIE["searchTPo"]) && ($_COOKIE["searchTPo"] == 2)) ? 'selected' : '' ?> value="2">Both</option>
+                        <option <?php echo (isset($_COOKIE["searchTPo"]) && ($_COOKIE["searchTPo"] == 1)) ? 'selected' : '' ?> value="1">TRUE</option>
+                        <option <?php echo (isset($_COOKIE["searchTPo"]) && ($_COOKIE["searchTPo"] == 0)) ? 'selected' : '' ?> value="0">FALSE</option>
+                        <option <?php echo (isset($_COOKIE["searchTPo"]) && ($_COOKIE["searchTPo"] == 2)) ? 'selected' : '' ?> value="2">BOTH</option>
                     </select>
                     <button class="btn btn-secondary" type="button" id="searchBtn" onclick="_searchTitle()">
                     &nbsp;
@@ -158,7 +158,6 @@
                 else{
                     $playoff = "";
                 }
-                echo "TName: ".$TName." year: ".$year." playoff: ".$playoff;
                 $teamData = getTeamInfo($TName, $year, 1, $playoff);
                 $teamCnt = 0;
                 if($teamData != NULL){
