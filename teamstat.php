@@ -89,11 +89,20 @@
                 if(searchTTitle){
                     document.cookie = "searchTTitle=" + searchTTitle;
                 }
+                else{
+                    document.cookie = "searchTTitle=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+                }
                 if(searchTYear){
                     document.cookie = "searchTYear=" + searchTYear;
                 }
+                else{
+                    document.cookie = "searchTYear=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+                }
                 if(searchTPo){
                     document.cookie = "searchTPo=" + searchTPo;
+                }
+                else{
+                    document.cookie = "searchTPo=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
                 }
                 window.location.reload();
             }
@@ -156,8 +165,8 @@
                     $teamCnt = count($teamData);
                 }
                 if($teamCnt > 0){
-                    for($index = 0; $index < $userCnt; $index ++){
-                        $team = $voteData[$index]->getTeam_1();
+                    for($index = 0; $index < $teamCnt; $index ++){
+                        $team = $teamData[$index]->getTeam_1();
                         // echo "<pre>";
                         // print_r($user);
                         // echo "</pre>";
