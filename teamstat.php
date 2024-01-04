@@ -144,7 +144,7 @@
                 echo "<table class='table table-borded'>";
                 echo "<thead><tr>";
                 echo "<th scope='col' class='w-50 align-middle'>Team Name</th>";
-                echo "<th scope='col' class='w-25 align-middle text-center'>Year</th>";
+                echo "<th scope='col' class='w-25 align-middle'>Year</th>";
                 echo "<th scope='col' class='w-25 align-middle'>Playoff</th>";
                 echo "</tr></thead>";
                 echo "<tbody>";
