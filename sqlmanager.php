@@ -127,15 +127,11 @@
         }
     }
 
-    function getPlayerList($PTitle){
-
-    }
-
     function getPlayerInfo($PName,$TName,$year,$mode){
         $connection = initDB();
         $playerData = NULL;
         
-        if (mode==1){ //player_info
+        if ($mode==1){ //player_info
             $query = "SELECT * FROM team_abbrev ta, player_info pl WHERE ta.tid=pl.tid AND pl.name LIKE '%$PName%' AND ta.abbrev LIKE '%$TName%' AND ta.year LIKE '%$year%' ORDER BY ta.year DESC, pl.name";
             $result = mysqli_query($connection, $query);
             $playerID = 0;
@@ -146,7 +142,7 @@
                 $playerID = $playerID + 1;
             }
         }
-        else if (mode==2){ //player_basic
+        else if ($mode==2){ //player_basic
             $query = "SELECT * FROM team_abbrev ta, player_info pl, player_basic pb WHERE ta.tid=pl.tid AND pl.pid=pb.pid AND pl.tid=pb.tid AND pl.name LIKE '%$PName%' AND ta.abbrev LIKE '%$TName%' AND ta.year LIKE '%$year%' ORDER BY ta.year DESC, pl.name";
             $result = mysqli_query($connection, $query);
             $playerID = 0;
@@ -157,7 +153,7 @@
                 $playerID = $playerID + 1;
             }
         }
-        else if (mode==3){ //player_shooting
+        else if ($mode==3){ //player_shooting
             $query = "SELECT * FROM team_abbrev ta, player_info pl, player_shooting ps WHERE ta.tid=pl.tid AND pl.pid=ps.pid AND pl.tid=ps.tid AND pl.name LIKE '%$PName%' AND ta.abbrev LIKE '%$TName%' AND ta.year LIKE '%$year%' ORDER BY ta.year DESC, pl.name";
             $result = mysqli_query($connection, $query);
             $playerID = 0;
