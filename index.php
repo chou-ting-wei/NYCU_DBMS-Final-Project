@@ -63,7 +63,7 @@
                                 }
                                 else{
                                     echo "<li class='nav-item'>";
-                                    echo "<a class='nav-link active'>".$username."</a>";
+                                    echo "<a class='nav-link active' href='editpw.php'>".$username."</a>";
                                     echo "</li>";
                                 }
                             }

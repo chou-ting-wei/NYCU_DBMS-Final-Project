@@ -3,6 +3,10 @@
     error_reporting(E_ERROR | E_WARNING);
     session_start();
     include("sqlmanager.php");
+
+    if($_SESSION["login_session"]){
+        echo "<script>location.href='index.php'</script>";
+    }
 ?>
 <html>
     <head>

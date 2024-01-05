@@ -6,7 +6,11 @@
         $_SESSION["login_session"] = false;
         $_SESSION["username"] = NULL;
     }
-    include("sqlmanager.php")
+    include("sqlmanager.php");
+
+    if(!$_SESSION["login_session"]){
+        echo "<script>location.href='login.php'</script>";
+    }
 ?>
 <html>
     <head>
@@ -73,7 +77,7 @@
                                 }
                                 else{
                                     echo "<li class='nav-item'>";
-                                    echo "<a class='nav-link active'>".$username."</a>";
+                                    echo "<a class='nav-link active' href='editpw.php'>".$username."</a>";
                                     echo "</li>";
                                 }
                             }
