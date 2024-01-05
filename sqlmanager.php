@@ -133,7 +133,7 @@
 
     function getPlayerInfo($PName,$TName,$year,$mode){
         $connection = initDB();
-        $playerData = NULL
+        $playerData = NULL;
         
         if (mode==1){ //player_info
             $query = "SELECT * FROM team_abbrev ta, player_info pl WHERE ta.tid=pl.tid AND pl.name LIKE '%$PName%' AND ta.abbrev LIKE '%$TName%' AND ta.year LIKE '%$year%' ORDER BY ta.year DESC, pl.name";
