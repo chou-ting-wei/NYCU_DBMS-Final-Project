@@ -203,7 +203,7 @@
         $result = mysqli_query($connection, $query);
         if (mysqli_num_rows($result) > 0){
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            return $row[abbrev];
+            return $row["abbrev"];
         }
         else{
             return false;

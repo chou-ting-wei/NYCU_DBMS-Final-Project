@@ -145,7 +145,6 @@
                 $PName = (isset($_COOKIE["searchPName"]) ? $_COOKIE["searchPName"] : '');
                 $PTeam = (isset($_COOKIE["searchPTeam"]) ? $_COOKIE["searchPTeam"] : '');
                 $year = (isset($_COOKIE["searchPYear"]) ? $_COOKIE["searchPYear"] : '');
-
                 $playerData = getPlayerInfo($PName, $PTeam, $year, 1);
                 $playerCnt = 0;
                 if($playerData != NULL){
@@ -158,9 +157,9 @@
                         // print_r($user);
                         // echo "</pre>";
                         echo "<tr>";
-                        echo "<td class='align-middle'><a href='#' onclick=\"loadInfo('".$player[3]."','".$player[2]."','".$player[0]."')\">".$player[3]."</a></td>";
+                        echo "<td class='align-middle'><a href='#' onclick=\"loadInfo('".$player[3]."','".nameToAbbrev($player[2])."','".$player[0]."')\">".$player[3]."</a></td>";
                         echo "<td class='align-middle'>".$player[2]."</td>";
-                        echo "<td class='align-middle'>".$player[2]."</td>";
+                        echo "<td class='align-middle'>".nameToAbbrev($player[2])."</td>";
                         echo "<td class='align-middle'>".$player[0]."</td>";
                         echo "</tr>";
                     }
