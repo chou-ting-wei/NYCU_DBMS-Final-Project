@@ -131,43 +131,43 @@
 
     }
 
-    function getPlayerInfo($PName){
+    function getPlayerInfo($PName,$TName,$year,$mode){
         $connection = initDB();
-    
-        $query = "SELECT * FROM Players WHERE PName='$PName'";
-        $result = mysqli_query($connection, $query);
-
-        $playerData = NULL;
-        $playerID = 0;
+        $playerData = NULL
         
-        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){   
-            $PID = $row['PID'];
-            $PName = $row['PName'];
-
-            // 這些是原本書裡給的
-            // $SourceSID = $row['SourceSID'];
-            // $DestSID = $row['DestSID'];
-
-            // // 取得出發地點的航點資訊
-            // $query2 = "SELECT * FROM Sectors WHERE SID='".$SourceSID."'";
-            // $result2 = mysqli_query($connection,$query2);         
-            // $row2 = mysqli_fetch_array($result2,MYSQLI_ASSOC);
-            // $source = $row2['Sector'];
-
-            // // 取得目的地點的航點資訊 
-            // $query3 = "SELECT * FROM Sectors WHERE SID='".$DestSID."'";
-            // $result3 = mysqli_query($connection, $query3);             
-            // $row3 = mysqli_fetch_array($result3,MYSQLI_ASSOC);
-            // $dest= $row3['Sector'];
-
-            $player = new Player();        
-            $player->set_PID($PID);
-            $player->set_PName($PName);
-
-            $playerData[$playerID] = $player;
-            $playerID = $playerID + 1;              
+        if (mode==1){ //player_info
+            $query = "SELECT * FROM team_abbrev ta, player_info pl WHERE ta.tid=pl.tid AND pl.name LIKE '%$PName%' AND ta.abbrev LIKE '%$TName%' AND ta.year LIKE '%$year%' ORDER BY ta.year DESC, pl.name";
+            $result = mysqli_query($connection, $query);
+            $playerID = 0;
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){            
+                $player = new player();
+                $player->setPlayer_1($row);
+                $playerData[$playerID] = $player;
+                $playerID = $playerID + 1;
+            }
         }
-
+        else if (mode==2){ //player_basic
+            $query = "SELECT * FROM team_abbrev ta, player_info pl, player_basic pb WHERE ta.tid=pl.tid AND pl.pid=pb.pid AND pl.tid=pb.tid AND pl.name LIKE '%$PName%' AND ta.abbrev LIKE '%$TName%' AND ta.year LIKE '%$year%' ORDER BY ta.year DESC, pl.name";
+            $result = mysqli_query($connection, $query);
+            $playerID = 0;
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){            
+                $player = new player();
+                $player->setPlayer_2($row);
+                $playerData[$playerID] = $player;
+                $playerID = $playerID + 1;
+            }
+        }
+        else if (mode==3){ //player_shooting
+            $query = "SELECT * FROM team_abbrev ta, player_info pl, player_shooting ps WHERE ta.tid=pl.tid AND pl.pid=ps.pid AND pl.tid=ps.tid AND pl.name LIKE '%$PName%' AND ta.abbrev LIKE '%$TName%' AND ta.year LIKE '%$year%' ORDER BY ta.year DESC, pl.name";
+            $result = mysqli_query($connection, $query);
+            $playerID = 0;
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){            
+                $player = new player();
+                $player->setPlayer_3($row);
+                $playerData[$playerID] = $player;
+                $playerID = $playerID + 1;
+            }
+        }
         closeDB($connection);
         return $playerData;
     }
