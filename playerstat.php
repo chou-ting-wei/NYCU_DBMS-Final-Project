@@ -136,7 +136,8 @@
                 echo "<div class='table-responsive'>";
                 echo "<table class='table table-borded table-hover'>";
                 echo "<thead><tr>";
-                echo "<th scope='col' class='w-50 align-middle'>Player Name</th>";
+                echo "<th scope='col' class='w-25 align-middle'>Player Name</th>";
+                echo "<th scope='col' class='w-25 align-middle'>Team Name</th>";
                 echo "<th scope='col' class='w-25 align-middle'>Team Abbreviation</th>";
                 echo "<th scope='col' class='w-25 align-middle'>Year</th>";
                 echo "</tr></thead>";
@@ -158,6 +159,7 @@
                         // echo "</pre>";
                         echo "<tr>";
                         echo "<td class='align-middle'><a href='#' onclick=\"loadInfo('".$player[3]."','".$player[2]."','".$player[0]."')\">".$player[3]."</a></td>";
+                        echo "<td class='align-middle'>".$player[2]."</td>";
                         echo "<td class='align-middle'>".$player[2]."</td>";
                         echo "<td class='align-middle'>".$player[0]."</td>";
                         echo "</tr>";
