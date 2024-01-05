@@ -197,6 +197,19 @@
         return $teamData;
     }
 
+    function nameToAbbrev($name){
+        $connection = initDB();
+        $query = "SELECT abbrev FROM team_abbrev ta WHERE ta.team='$name' LIMIT 1";
+        $result = mysqli_query($connection, $query);
+        if (mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            return $row[abbrev];
+        }
+        else{
+            return false;
+        }
+    }
+
     function getForumList($FTitle){
         $connection = initDB();
 
