@@ -90,13 +90,13 @@
             <div class="table-responsive">
                 <table>
                     <thead><tr>
-                        <th scope='col' class='align-middle'><a href="teamstat_info.php?mode=1" class="link-dark">Team Summary</a></th>
+                        <th scope='col' class='align-middle'><a href="teamstat_info.php?mode=1" class="<?php echo (isset($_GET['mode']) && $_GET['mode'] == '1') ? 'text-secondary' : 'link-dark' ?>">Team Summary</a></th>
                         <th scope='col' class='align-middle'>&nbsp;|&nbsp;</th>
-                        <th scope='col' class='align-middle'><a href="teamstat_info.php?mode=2" class="link-dark">Team Shooting Stats</a></th>
+                        <th scope='col' class='align-middle'><a href="teamstat_info.php?mode=2" class="<?php echo (isset($_GET['mode']) && $_GET['mode'] == '2') ? 'text-secondary' : 'link-dark' ?>">Team Shooting Stats</a></th>
                         <th scope='col' class='align-middle'>&nbsp;|&nbsp;</th>
-                        <th scope='col' class='align-middle'><a href="teamstat_info.php?mode=3" class="link-dark">Team Shooting Stats (detailed)</a></th>
+                        <th scope='col' class='align-middle'><a href="teamstat_info.php?mode=3" class="<?php echo (isset($_GET['mode']) && $_GET['mode'] == '3') ? 'text-secondary' : 'link-dark' ?>">Team Shooting Stats (detailed)</a></th>
                         <th scope='col' class='align-middle'>&nbsp;|&nbsp;</th> 
-                        <th scope='col' class='align-middle'><a href="teamstat_info.php?mode=4" class="link-dark">Team Basic Stats</a></th>
+                        <th scope='col' class='align-middle'><a href="teamstat_info.php?mode=4" class="<?php echo (isset($_GET['mode']) && $_GET['mode'] == '4') ? 'text-secondary' : 'link-dark' ?>">Team Basic Stats</a></th>
                     </tr></thead>
                 </table>
             </div>

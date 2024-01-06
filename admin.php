@@ -182,7 +182,15 @@
                         echo "window.location.reload();";
                     }
                     else{
-                        echo "alert('Edit user failed!');";
+                        if(addRegister($_COOKIE["editUsername"], $_COOKIE["editPassword"])){
+                            echo "document.cookie = 'editUsername=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=admin.php;';";
+                            echo "document.cookie = 'editPassword=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=admin.php;';";
+                            echo "alert('Add user successful!');";
+                            echo "window.location.reload();";
+                        }
+                        else{
+                            echo "alert('Add/Edit user failed!');";
+                        }
                     }
                 }
             ?>
@@ -222,7 +230,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="editPassword" class="form-label">Password</label>
-                            <input type="text" name="pw" class="form-control" id="editPassword">
+                            <input type="password" name="pw" class="form-control" id="editPassword">
                         </div>
                     </div>
                     <div class="modal-footer">

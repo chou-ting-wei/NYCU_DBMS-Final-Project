@@ -90,11 +90,11 @@
             <div class="table-responsive">
                 <table>
                     <thead><tr>
-                        <th scope='col' class='align-middle'><a href="playerstat_info.php?mode=1" class="link-dark">Player Summary</a></th>
+                        <th scope='col' class='align-middle'><a href="playerstat_info.php?mode=1" class="<?php echo (isset($_GET['mode']) && $_GET['mode'] == '1') ? 'text-secondary' : 'link-dark' ?>">Player Summary</a></th>
                         <th scope='col' class='align-middle'>&nbsp;|&nbsp;</th>
-                        <th scope='col' class='align-middle'><a href="playerstat_info.php?mode=2" class="link-dark">Player Basic Stats</a></th>
+                        <th scope='col' class='align-middle'><a href="playerstat_info.php?mode=2" class="<?php echo (isset($_GET['mode']) && $_GET['mode'] == '2') ? 'text-secondary' : 'link-dark' ?>">Player Basic Stats</a></th>
                         <th scope='col' class='align-middle'>&nbsp;|&nbsp;</th>
-                        <th scope='col' class='align-middle'><a href="playerstat_info.php?mode=3" class="link-dark">Player Shooting Stats</a></th>
+                        <th scope='col' class='align-middle'><a href="playerstat_info.php?mode=3" class="<?php echo (isset($_GET['mode']) && $_GET['mode'] == '3') ? 'text-secondary' : 'link-dark' ?>">Player Shooting Stats</a></th>
                     </tr></thead>
                 </table>
             </div>
