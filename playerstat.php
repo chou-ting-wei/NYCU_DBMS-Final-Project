@@ -165,7 +165,7 @@
                     }
                 }
                 else{
-                    echo "<tr><td class='align-middle' colspan='3'><span class='text-danger mb-3'>No data found.</span></td></tr>";
+                    echo "<tr><td class='align-middle' colspan='4'><span class='text-danger mb-3'>No data found.</span></td></tr>";
                 }
                 echo "</tbody></table></div></div>";
             ?>
