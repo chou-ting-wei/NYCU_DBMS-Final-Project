@@ -15,9 +15,9 @@ NBA是美國的職業籃球聯賽，被公認為世界上最受歡迎的球賽�
 3. 隊伍查詢
 ![Team Stat](https://github.com/chou-ting-wei/DBMS_Final-Project/assets/70355885/8c265171-5211-41e5-a055-bc639fc7bed0)
 
-4. 投票系統
+4. 論壇系統
 ![Vote](https://github.com/chou-ting-wei/DBMS_Final-Project/assets/70355885/65c2dcbb-79b6-4e1b-873d-efb68a3795f7)
 
-5. 論壇系統
+5. 投票系統
 ![Forum](https://github.com/chou-ting-wei/DBMS_Final-Project/assets/70355885/fc18cca3-8218-4893-b342-e675a0cf7e11)
 
